@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/revert/main/json-schema/revert-contact-schema.json",
+  "title": "Revert Unified CRM Contact",
+  "description": "Normalized contact entity returned by the Revert Unified CRM API across Salesforce, HubSpot, Zoho CRM, Pipedrive, and Close CRM",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Revert-normalized unique contact identifier"
+    },
+    "remoteId": {
+      "type": "string",
+      "description": "The original ID from the source CRM provider"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "Contact's first name"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Contact's last name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Primary phone number"
+    },
+    "company": {
+      "type": "string",
+      "description": "Associated company name"
+    },
+    "title": {
+      "type": "string",
+      "description": "Job title"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp"
+    },
+    "additional": {
+      "type": "object",
+      "description": "Non-unified fields from the source CRM provider"
+    }
+  },
+  "required": ["id"]
+}

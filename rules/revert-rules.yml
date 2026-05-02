@@ -1,0 +1,92 @@
+rules:
+  revert-operation-id-camel-case:
+    description: All operationIds must use camelCase format consistent with Revert SDK generation
+    severity: warn
+    given: "$.paths.*.*"
+    then:
+      field: operationId
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  revert-tags-title-case:
+    description: All tags must use Title Case
+    severity: warn
+    given: "$.tags[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  revert-tenant-id-header-required:
+    description: All endpoints except /connection must include x-revert-t-id header
+    severity: error
+    given: "$.paths[?(!@property.match(/^\\/connection$/))].*"
+    then:
+      field: parameters
+      function: truthy
+
+  revert-api-token-auth:
+    description: All endpoints must declare x-revert-api-token security
+    severity: error
+    given: "$.paths.*.*"
+    then:
+      field: security
+      function: defined
+
+  revert-response-status-field:
+    description: All 200 responses should include a status field in the schema
+    severity: warn
+    given: "$.paths.*.*.responses.200.content.application/json.schema.properties"
+    then:
+      field: status
+      function: defined
+
+  revert-pagination-cursor-consistency:
+    description: List endpoints returning paginated results must include next and previous cursor fields
+    severity: warn
+    given: "$.paths[?(@property.match(/^(?!.*\\{id\\}).*$/))].get.responses.200.content.application/json.schema.properties"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          properties:
+            next:
+              type: object
+            previous:
+              type: object
+
+  revert-version-prefix:
+    description: All API paths should follow the established /crm/, /ticket/, /chat/, /accounting/ namespace pattern
+    severity: info
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(\\/connection|\\/crm\\/|\\/ticket\\/|\\/chat\\/|\\/accounting\\/)"
+
+  revert-no-trailing-slash:
+    description: API paths must not end with a trailing slash
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\/$"
+
+  revert-kebab-case-paths:
+    description: Path segments must use kebab-case
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(\\/[a-z][a-z0-9-]*)(\\/{[^}]+})?(\\/[a-z][a-z0-9-]*)*(\\/\\{[^}]+\\})?$"
+
+  revert-additional-fields-support:
+    description: Request bodies for create/update operations should include an additional field for non-unified data
+    severity: info
+    given: "$.paths.*.post.requestBody.content.application/json.schema.properties"
+    then:
+      field: additional
+      function: defined

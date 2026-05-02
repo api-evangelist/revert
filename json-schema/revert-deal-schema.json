@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/revert/main/json-schema/revert-deal-schema.json",
+  "title": "Revert Unified CRM Deal",
+  "description": "Normalized deal/opportunity entity returned by the Revert Unified CRM API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Revert-normalized unique deal identifier"
+    },
+    "remoteId": {
+      "type": "string",
+      "description": "The original ID from the source CRM provider"
+    },
+    "name": {
+      "type": "string",
+      "description": "Deal name or title"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Deal value/amount"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency code (ISO 4217)"
+    },
+    "stage": {
+      "type": "string",
+      "description": "Current pipeline stage"
+    },
+    "probability": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Win probability percentage"
+    },
+    "closeDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Expected or actual close date"
+    },
+    "ownerId": {
+      "type": "string",
+      "description": "Deal owner user ID"
+    },
+    "contactId": {
+      "type": "string",
+      "description": "Associated contact ID"
+    },
+    "companyId": {
+      "type": "string",
+      "description": "Associated company ID"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "additional": {
+      "type": "object",
+      "description": "Non-unified fields from the source CRM provider"
+    }
+  },
+  "required": ["id", "name"]
+}

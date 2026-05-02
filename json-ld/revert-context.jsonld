@@ -1,0 +1,61 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "revert": "https://www.revert.dev/vocab/",
+    "id": "@id",
+    "type": "@type",
+
+    "Contact": "schema:Person",
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "email": "schema:email",
+    "phone": "schema:telephone",
+    "company": "schema:worksFor",
+    "title": "schema:jobTitle",
+
+    "Company": "schema:Organization",
+    "name": "schema:name",
+    "website": "schema:url",
+    "industry": "schema:industry",
+    "numberOfEmployees": "schema:numberOfEmployees",
+
+    "Deal": "revert:Deal",
+    "amount": "schema:price",
+    "currency": "schema:priceCurrency",
+    "stage": "revert:stage",
+    "probability": "revert:probability",
+    "closeDate": "schema:endDate",
+
+    "Lead": "revert:Lead",
+    "source": "schema:sourceOrganization",
+    "status": "schema:actionStatus",
+
+    "Task": "schema:Action",
+    "subject": "schema:name",
+    "description": "schema:description",
+    "dueDate": "schema:endDate",
+    "priority": "revert:priority",
+
+    "Event": "schema:Event",
+    "startDate": "schema:startDate",
+    "endDate": "schema:endDate",
+    "location": "schema:location",
+
+    "Note": "revert:Note",
+    "content": "schema:text",
+
+    "User": "schema:Person",
+    "role": "schema:roleName",
+
+    "Connection": "revert:Connection",
+    "tp_id": "revert:thirdPartyId",
+    "t_id": "revert:tenantId",
+    "tp_account_url": "revert:accountUrl",
+
+    "remoteId": "revert:remoteId",
+    "additional": "revert:additionalFields",
+    "createdAt": "schema:dateCreated",
+    "updatedAt": "schema:dateModified"
+  }
+}

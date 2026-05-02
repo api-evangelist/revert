@@ -1,0 +1,143 @@
+vocabulary:
+  name: Revert Unified API Vocabulary
+  description: >-
+    Terminology, concepts, and domain vocabulary for the Revert open-source
+    unified API integration platform.
+  version: "1.0.0"
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+terms:
+  - term: Unified API
+    definition: >-
+      A single API surface that normalizes data models and operations across
+      multiple third-party providers, allowing developers to integrate once
+      and support many providers simultaneously.
+
+  - term: Tenant
+    definition: >-
+      An end-user of the developer's product whose third-party account
+      (e.g., Salesforce org, HubSpot portal) is connected via Revert.
+      Identified by a tenant ID (t_id).
+
+  - term: Tenant ID (t_id)
+    definition: >-
+      The unique identifier assigned to a customer when they connect their
+      third-party account. Passed as x-revert-t-id header in all API calls.
+
+  - term: Third-Party ID (tp_id)
+    definition: >-
+      Identifies the source CRM or platform provider (e.g., hubspot, salesforce,
+      zoho, pipedrive, close).
+
+  - term: Connection
+    definition: >-
+      The OAuth link between a tenant and their third-party provider, managed
+      by Revert. Includes access/refresh tokens and provider account URL.
+
+  - term: Remote ID
+    definition: >-
+      The native identifier of a record in the source CRM provider system,
+      preserved alongside Revert's normalized ID.
+
+  - term: Additional Fields
+    definition: >-
+      Non-unified, provider-specific fields that don't map to Revert's
+      normalized schema, returned in the `additional` JSON object.
+
+  - term: Field Mapping
+    definition: >-
+      The configuration that maps provider-native field names to Revert's
+      normalized unified schema.
+
+  - term: OAuth Management
+    definition: >-
+      Revert's automatic handling of OAuth 2.0 token acquisition, storage,
+      refresh, and failure recovery for all connected providers.
+
+  - term: CRM
+    definition: >-
+      Customer Relationship Management system. Supported providers: Salesforce,
+      HubSpot, Zoho CRM, Pipedrive, Close CRM.
+
+  - term: Contact
+    definition: >-
+      A person in a CRM system. Revert normalizes contact fields across all
+      supported providers including name, email, phone, title, and company.
+
+  - term: Company
+    definition: >-
+      An organization or account in a CRM. May be called Account (Salesforce),
+      Company (HubSpot/Pipedrive), or Organization (Zoho) in source systems.
+
+  - term: Deal
+    definition: >-
+      A sales opportunity or transaction in progress. May be called Opportunity
+      (Salesforce), Deal (HubSpot/Pipedrive/Close), or Potential (Zoho).
+
+  - term: Lead
+    definition: >-
+      An unqualified prospect who has shown interest. Normalized across CRMs
+      that support a distinct Lead object.
+
+  - term: Note
+    definition: >-
+      A free-text annotation attached to a CRM record (contact, deal, company).
+
+  - term: Task
+    definition: >-
+      An action item or to-do associated with a CRM record or deal stage.
+
+  - term: Event
+    definition: >-
+      A calendar activity or meeting log associated with CRM records.
+
+  - term: Cursor
+    definition: >-
+      An opaque pagination token used to navigate through large result sets
+      in list endpoints via the `cursor` query parameter.
+
+  - term: Proxy
+    definition: >-
+      A pass-through endpoint that allows making raw requests directly to the
+      underlying provider API while maintaining Revert authentication.
+
+  - term: Self-Hosting
+    definition: >-
+      Deploying the Revert backend infrastructure in your own environment
+      using Docker Compose, maintaining full data sovereignty.
+
+  - term: Drop-in UI
+    definition: >-
+      Revert's pre-built React/Vue/JavaScript SDK components for displaying
+      the OAuth connection flow to end-users in your product.
+
+categories:
+  - name: Authentication
+    terms:
+      - Connection
+      - Tenant
+      - Tenant ID (t_id)
+      - Third-Party ID (tp_id)
+      - OAuth Management
+
+  - name: Data Model
+    terms:
+      - Contact
+      - Company
+      - Deal
+      - Lead
+      - Note
+      - Task
+      - Event
+      - Remote ID
+      - Additional Fields
+      - Field Mapping
+
+  - name: Platform Concepts
+    terms:
+      - Unified API
+      - Proxy
+      - Cursor
+      - Self-Hosting
+      - Drop-in UI

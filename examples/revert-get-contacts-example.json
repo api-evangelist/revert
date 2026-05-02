@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.revert.dev/crm/contacts",
+    "headers": {
+      "x-revert-api-token": "YOUR_REVERT_API_TOKEN",
+      "x-revert-t-id": "tenant-12345",
+      "x-api-version": "1.0"
+    },
+    "queryParameters": {
+      "pageSize": "25",
+      "fields": "firstName,lastName,email,company"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "next": "eyJsYXN0SWQiOiAiY250XzEyMyJ9",
+      "previous": null,
+      "results": [
+        {
+          "id": "unified-cnt-001",
+          "remoteId": "0031234567890ABCDEF",
+          "firstName": "Sarah",
+          "lastName": "Johnson",
+          "email": "sarah.johnson@acmecorp.com",
+          "phone": "+1-555-0101",
+          "company": "Acme Corporation",
+          "title": "VP of Engineering",
+          "createdAt": "2024-01-15T10:30:00Z",
+          "updatedAt": "2026-04-22T14:15:00Z",
+          "additional": {
+            "sf_lead_source": "Web",
+            "sf_account_id": "0011234567890ABCDE"
+          }
+        },
+        {
+          "id": "unified-cnt-002",
+          "remoteId": "0031234567890XYZAB",
+          "firstName": "Michael",
+          "lastName": "Chen",
+          "email": "m.chen@techstartup.io",
+          "phone": "+1-555-0202",
+          "company": "TechStartup Inc.",
+          "title": "CTO",
+          "createdAt": "2024-03-01T09:00:00Z",
+          "updatedAt": "2026-05-01T08:45:00Z",
+          "additional": {}
+        }
+      ]
+    }
+  }
+}

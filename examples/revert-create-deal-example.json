@@ -1,0 +1,48 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.revert.dev/crm/deals",
+    "headers": {
+      "x-revert-api-token": "YOUR_REVERT_API_TOKEN",
+      "x-revert-t-id": "tenant-12345",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Acme Corp Enterprise License",
+      "amount": 48000,
+      "currency": "USD",
+      "stage": "Proposal Sent",
+      "probability": 65,
+      "closeDate": "2026-06-30",
+      "ownerId": "user-789",
+      "contactId": "unified-cnt-001",
+      "companyId": "unified-co-042",
+      "additional": {
+        "custom_deal_type": "enterprise",
+        "referral_source": "partner_referral"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "message": "Deal created successfully",
+      "result": {
+        "id": "unified-deal-new-001",
+        "remoteId": "0061234567890NEWDE",
+        "name": "Acme Corp Enterprise License",
+        "amount": 48000,
+        "currency": "USD",
+        "stage": "Proposal Sent",
+        "probability": 65,
+        "closeDate": "2026-06-30",
+        "ownerId": "user-789",
+        "contactId": "unified-cnt-001",
+        "companyId": "unified-co-042",
+        "createdAt": "2026-05-02T12:00:00Z",
+        "updatedAt": "2026-05-02T12:00:00Z"
+      }
+    }
+  }
+}

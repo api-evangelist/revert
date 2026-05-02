@@ -1,0 +1,336 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Revert CRM Integration"
+  description: >-
+    Workflow capability for building unified CRM integrations across Salesforce,
+    HubSpot, Zoho CRM, Pipedrive, and Close CRM. Enables product teams to manage
+    contacts, companies, deals, leads, tasks, events, and notes through a single
+    normalized API with automatic OAuth and field mapping.
+  tags:
+    - Revert
+    - CRM
+    - Integrations
+    - Salesforce
+    - HubSpot
+    - Pipedrive
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      REVERT_API_TOKEN: REVERT_API_TOKEN
+      REVERT_TENANT_ID: REVERT_TENANT_ID
+
+capability:
+  consumes:
+    - import: revert
+      location: ./shared/revert-unified-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: revert-crm-api
+      description: "Unified REST API for CRM integration workflows."
+      resources:
+        - path: /v1/contacts
+          name: contacts
+          description: "Unified contact management across all connected CRMs"
+          operations:
+            - method: GET
+              name: list-contacts
+              description: "List all contacts from the tenant's connected CRM"
+              call: "revert.get-contacts"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+                pageSize: "rest.page_size"
+                cursor: "rest.cursor"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-contact
+              description: "Create a new contact in the tenant's CRM"
+              call: "revert.create-contact"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/contacts/{id}
+          name: contact
+          description: "Individual contact operations"
+          operations:
+            - method: GET
+              name: get-contact
+              description: "Get a specific contact by ID"
+              call: "revert.get-contact"
+              with:
+                id: "rest.id"
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PATCH
+              name: update-contact
+              description: "Update an existing contact"
+              call: "revert.update-contact"
+              with:
+                id: "rest.id"
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/contacts/search
+          name: contact-search
+          description: "Search contacts by criteria"
+          operations:
+            - method: POST
+              name: search-contacts
+              description: "Search contacts using filter criteria"
+              call: "revert.search-contacts"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/companies
+          name: companies
+          description: "Unified company/account management"
+          operations:
+            - method: GET
+              name: list-companies
+              description: "List all companies from the tenant's CRM"
+              call: "revert.get-companies"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+                pageSize: "rest.page_size"
+                cursor: "rest.cursor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-company
+              description: "Create a new company/account in the CRM"
+              call: "revert.create-company"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/deals
+          name: deals
+          description: "Unified deal/opportunity pipeline management"
+          operations:
+            - method: GET
+              name: list-deals
+              description: "List all deals/opportunities from the tenant's CRM"
+              call: "revert.get-deals"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+                pageSize: "rest.page_size"
+                cursor: "rest.cursor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-deal
+              description: "Create a new deal/opportunity in the CRM"
+              call: "revert.create-deal"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/leads
+          name: leads
+          description: "Unified lead management"
+          operations:
+            - method: GET
+              name: list-leads
+              description: "List all leads from the tenant's CRM"
+              call: "revert.get-leads"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+                pageSize: "rest.page_size"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-lead
+              description: "Create a new lead in the CRM"
+              call: "revert.create-lead"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/connections
+          name: connections
+          description: "Tenant OAuth connection management"
+          operations:
+            - method: GET
+              name: get-connection
+              description: "Get OAuth connection status for a tenant"
+              call: "revert.get-connection"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: revert-crm-mcp
+      transport: http
+      description: "MCP server for AI-assisted CRM integration workflows."
+      tools:
+        - name: list-contacts
+          description: "List all contacts from the tenant's connected CRM (Salesforce, HubSpot, Zoho, Pipedrive, or Close)"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-contacts"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+            pageSize: "tools.page_size"
+            cursor: "tools.cursor"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-contact
+          description: "Get details of a specific CRM contact by ID"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "revert.get-contact"
+          with:
+            id: "tools.contact_id"
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-contact
+          description: "Create a new contact in the tenant's CRM"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.create-contact"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-contact
+          description: "Update an existing CRM contact"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "revert.update-contact"
+          with:
+            id: "tools.contact_id"
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: search-contacts
+          description: "Search CRM contacts using filter criteria"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.search-contacts"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-companies
+          description: "List all companies/accounts from the tenant's CRM"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-companies"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-company
+          description: "Create a new company/account in the CRM"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.create-company"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-deals
+          description: "List all deals/opportunities in the CRM pipeline"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-deals"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-deal
+          description: "Create a new deal/opportunity in the CRM pipeline"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.create-deal"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-leads
+          description: "List all leads in the CRM"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-leads"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-lead
+          description: "Create a new lead in the CRM"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.create-lead"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-connection-status
+          description: "Get OAuth connection status and details for a tenant"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "revert.get-connection"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."

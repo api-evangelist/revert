@@ -1,0 +1,578 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Revert Unified API"
+  description: "Open-source unified API platform for building integrations with CRMs, ticketing systems, chat platforms, and accounting software through a single normalized interface."
+  tags:
+    - Revert
+    - Integrations
+    - Unified API
+    - CRM
+    - Open Source
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      REVERT_API_TOKEN: REVERT_API_TOKEN
+      REVERT_TENANT_ID: REVERT_TENANT_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: revert
+      baseUri: https://api.revert.dev
+      description: "Revert Unified API for CRM, ticketing, chat, and accounting integrations"
+      authentication:
+        type: apikey
+        key: x-revert-api-token
+        value: "{{REVERT_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: connections
+          path: /connection
+          description: "Manage third-party OAuth connections and webhooks"
+          operations:
+            - name: get-connection
+              method: GET
+              description: "Get details of a connection for a specific tenant"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "The unique customer id used when the customer linked their account"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-connection-webhook
+              method: POST
+              description: "Create a webhook for a tenant connection"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "The unique customer tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  webhookUrl: "{{tools.webhookUrl}}"
+
+        - name: crm-contacts
+          path: /crm/contacts
+          description: "Unified CRM contact operations"
+          operations:
+            - name: get-contacts
+              method: GET
+              description: "Get all CRM contacts with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Comma-separated list of fields"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+                - name: cursor
+                  in: query
+                  type: string
+                  required: false
+                  description: "Pagination cursor"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-contact
+              method: GET
+              description: "Get details of a specific CRM contact by ID"
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: "Contact ID"
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-contact
+              method: POST
+              description: "Create a new CRM contact"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+                  email: "{{tools.email}}"
+            - name: update-contact
+              method: PATCH
+              description: "Update an existing CRM contact"
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: "Contact ID"
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: search-contacts
+              method: POST
+              description: "Search CRM contacts by criteria"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  searchCriteria: "{{tools.searchCriteria}}"
+
+        - name: crm-companies
+          path: /crm/companies
+          description: "Unified CRM company/account operations"
+          operations:
+            - name: get-companies
+              method: GET
+              description: "Get all CRM companies/accounts with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+                - name: cursor
+                  in: query
+                  type: string
+                  required: false
+                  description: "Pagination cursor"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-company
+              method: POST
+              description: "Create a new CRM company/account"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  website: "{{tools.website}}"
+
+        - name: crm-deals
+          path: /crm/deals
+          description: "Unified CRM deal/opportunity operations"
+          operations:
+            - name: get-deals
+              method: GET
+              description: "Get all CRM deals/opportunities with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+                - name: cursor
+                  in: query
+                  type: string
+                  required: false
+                  description: "Pagination cursor"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-deal
+              method: POST
+              description: "Create a new CRM deal/opportunity"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  amount: "{{tools.amount}}"
+                  stage: "{{tools.stage}}"
+
+        - name: crm-leads
+          path: /crm/leads
+          description: "Unified CRM lead operations"
+          operations:
+            - name: get-leads
+              method: GET
+              description: "Get all CRM leads with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-lead
+              method: POST
+              description: "Create a new CRM lead"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+                  email: "{{tools.email}}"
+
+        - name: ticket-tasks
+          path: /ticket/tasks
+          description: "Unified ticketing task operations"
+          operations:
+            - name: get-ticket-tasks
+              method: GET
+              description: "Get all ticketing tasks with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-ticket-task
+              method: POST
+              description: "Create a new ticketing task"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  title: "{{tools.title}}"
+                  description: "{{tools.description}}"
+                  priority: "{{tools.priority}}"
+
+        - name: chat-messages
+          path: /chat/messages
+          description: "Unified chat message operations"
+          operations:
+            - name: get-messages
+              method: GET
+              description: "Get chat messages with pagination"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+                - name: pageSize
+                  in: query
+                  type: string
+                  required: false
+                  description: "Number of results per page"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: send-message
+              method: POST
+              description: "Send a new chat message to a channel"
+              inputParameters:
+                - name: x-revert-t-id
+                  in: header
+                  type: string
+                  required: true
+                  description: "Tenant ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  text: "{{tools.text}}"
+                  channelId: "{{tools.channelId}}"
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: revert-api
+      resources:
+        - path: /v1/connections
+          name: connections
+          description: "Manage third-party OAuth connections"
+          operations:
+            - method: GET
+              name: get-connection
+              description: "Get connection details for a tenant"
+              call: "revert.get-connection"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/crm/contacts
+          name: crm-contacts
+          description: "CRM contact management"
+          operations:
+            - method: GET
+              name: list-contacts
+              description: "List all CRM contacts"
+              call: "revert.get-contacts"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+                pageSize: "rest.page_size"
+                cursor: "rest.cursor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-contact
+              description: "Create a new CRM contact"
+              call: "revert.create-contact"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/crm/contacts/{id}
+          name: crm-contact
+          description: "Individual CRM contact operations"
+          operations:
+            - method: GET
+              name: get-contact
+              description: "Get a specific CRM contact by ID"
+              call: "revert.get-contact"
+              with:
+                id: "rest.id"
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/crm/deals
+          name: crm-deals
+          description: "CRM deal/opportunity management"
+          operations:
+            - method: GET
+              name: list-deals
+              description: "List all CRM deals"
+              call: "revert.get-deals"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/tickets
+          name: tickets
+          description: "Ticketing task management"
+          operations:
+            - method: GET
+              name: list-tickets
+              description: "List all ticketing tasks"
+              call: "revert.get-ticket-tasks"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-ticket
+              description: "Create a new ticket"
+              call: "revert.create-ticket-task"
+              with:
+                x-revert-t-id: "rest.tenant_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: revert-mcp
+      transport: http
+      tools:
+        - name: get-connection
+          description: "Get OAuth connection details for a tenant"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "revert.get-connection"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-crm-contacts
+          description: "List all CRM contacts for a tenant"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-contacts"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+            pageSize: "tools.page_size"
+            cursor: "tools.cursor"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-crm-contact
+          description: "Create a new contact in the tenant's CRM"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.create-contact"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-crm-deals
+          description: "List all deals/opportunities in the tenant's CRM"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-deals"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-tickets
+          description: "List all tickets/tasks in the tenant's ticketing system"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "revert.get-ticket-tasks"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-chat-message
+          description: "Send a message to a chat channel via the connected platform"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "revert.send-message"
+          with:
+            x-revert-t-id: "tools.tenant_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
