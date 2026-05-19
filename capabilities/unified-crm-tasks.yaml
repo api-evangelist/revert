@@ -1,0 +1,189 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Revert Unified API — CRM Tasks
+  description: 'Revert Unified API — CRM Tasks. 4 operations. Lead operation: List CRM Tasks. Self-contained Naftiko capability
+    covering one Revert business surface.'
+  tags:
+  - Revert
+  - CRM Tasks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REVERT_API_KEY: REVERT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-crm-tasks
+    baseUri: https://api.revert.dev
+    description: Revert Unified API — CRM Tasks business capability. Self-contained, no shared references.
+    resources:
+    - name: crm-tasks
+      path: /crm/tasks
+      operations:
+      - name: getcrmtasks
+        method: GET
+        description: List CRM Tasks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcrmtask
+        method: POST
+        description: Create CRM Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: crm-tasks-id
+      path: /crm/tasks/{id}
+      operations:
+      - name: getcrmtask
+        method: GET
+        description: Get CRM Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: updatecrmtask
+        method: PATCH
+        description: Update CRM Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-revert-api-token
+      value: '{{env.REVERT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: unified-crm-tasks-rest
+    port: 8080
+    description: REST adapter for Revert Unified API — CRM Tasks. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/crm/tasks
+      name: crm-tasks
+      description: REST surface for crm-tasks.
+      operations:
+      - method: GET
+        name: getcrmtasks
+        description: List CRM Tasks
+        call: unified-crm-tasks.getcrmtasks
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcrmtask
+        description: Create CRM Task
+        call: unified-crm-tasks.createcrmtask
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/crm/tasks/{id}
+      name: crm-tasks-id
+      description: REST surface for crm-tasks-id.
+      operations:
+      - method: GET
+        name: getcrmtask
+        description: Get CRM Task
+        call: unified-crm-tasks.getcrmtask
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecrmtask
+        description: Update CRM Task
+        call: unified-crm-tasks.updatecrmtask
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-crm-tasks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Revert Unified API — CRM Tasks. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-crm-tasks
+      description: List CRM Tasks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-crm-tasks.getcrmtasks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-crm-task
+      description: Create CRM Task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-crm-tasks.createcrmtask
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-crm-task
+      description: Get CRM Task
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-crm-tasks.getcrmtask
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-crm-task
+      description: Update CRM Task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: unified-crm-tasks.updatecrmtask
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

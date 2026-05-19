@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Revert Unified API — Connections
+  description: 'Revert Unified API — Connections. 4 operations. Lead operation: Get Connection Details. Self-contained Naftiko
+    capability covering one Revert business surface.'
+  tags:
+  - Revert
+  - Connections
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REVERT_API_KEY: REVERT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-connections
+    baseUri: https://api.revert.dev
+    description: Revert Unified API — Connections business capability. Self-contained, no shared references.
+    resources:
+    - name: connection
+      path: /connection
+      operations:
+      - name: getconnection
+        method: GET
+        description: Get Connection Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: connection-webhook
+      path: /connection/webhook
+      operations:
+      - name: createconnectionwebhook
+        method: POST
+        description: Create Connection Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: getconnectionwebhook
+        method: GET
+        description: Get Connection Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteconnectionwebhook
+        method: DELETE
+        description: Delete Connection Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: x-revert-api-token
+      value: '{{env.REVERT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: unified-connections-rest
+    port: 8080
+    description: REST adapter for Revert Unified API — Connections. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/connection
+      name: connection
+      description: REST surface for connection.
+      operations:
+      - method: GET
+        name: getconnection
+        description: Get Connection Details
+        call: unified-connections.getconnection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connection/webhook
+      name: connection-webhook
+      description: REST surface for connection-webhook.
+      operations:
+      - method: POST
+        name: createconnectionwebhook
+        description: Create Connection Webhook
+        call: unified-connections.createconnectionwebhook
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getconnectionwebhook
+        description: Get Connection Webhook
+        call: unified-connections.getconnectionwebhook
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteconnectionwebhook
+        description: Delete Connection Webhook
+        call: unified-connections.deleteconnectionwebhook
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-connections-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Revert Unified API — Connections. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-connection-details
+      description: Get Connection Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-connections.getconnection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-connection-webhook
+      description: Create Connection Webhook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-connections.createconnectionwebhook
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connection-webhook
+      description: Get Connection Webhook
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-connections.getconnectionwebhook
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-connection-webhook
+      description: Delete Connection Webhook
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: unified-connections.deleteconnectionwebhook
+      outputParameters:
+      - type: object
+        mapping: $.

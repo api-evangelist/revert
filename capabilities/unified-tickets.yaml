@@ -1,0 +1,221 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Revert Unified API — Tickets
+  description: 'Revert Unified API — Tickets. 5 operations. Lead operation: List Ticket Collections. Self-contained Naftiko
+    capability covering one Revert business surface.'
+  tags:
+  - Revert
+  - Tickets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REVERT_API_KEY: REVERT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-tickets
+    baseUri: https://api.revert.dev
+    description: Revert Unified API — Tickets business capability. Self-contained, no shared references.
+    resources:
+    - name: ticket-collections
+      path: /ticket/collections
+      operations:
+      - name: getticketcollections
+        method: GET
+        description: List Ticket Collections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ticket-tasks
+      path: /ticket/tasks
+      operations:
+      - name: gettickettasks
+        method: GET
+        description: List Ticket Tasks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtickettask
+        method: POST
+        description: Create Ticket Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ticket-tasks-id
+      path: /ticket/tasks/{id}
+      operations:
+      - name: gettickettask
+        method: GET
+        description: Get Ticket Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: updatetickettask
+        method: PATCH
+        description: Update Ticket Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-revert-api-token
+      value: '{{env.REVERT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: unified-tickets-rest
+    port: 8080
+    description: REST adapter for Revert Unified API — Tickets. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ticket/collections
+      name: ticket-collections
+      description: REST surface for ticket-collections.
+      operations:
+      - method: GET
+        name: getticketcollections
+        description: List Ticket Collections
+        call: unified-tickets.getticketcollections
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ticket/tasks
+      name: ticket-tasks
+      description: REST surface for ticket-tasks.
+      operations:
+      - method: GET
+        name: gettickettasks
+        description: List Ticket Tasks
+        call: unified-tickets.gettickettasks
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtickettask
+        description: Create Ticket Task
+        call: unified-tickets.createtickettask
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ticket/tasks/{id}
+      name: ticket-tasks-id
+      description: REST surface for ticket-tasks-id.
+      operations:
+      - method: GET
+        name: gettickettask
+        description: Get Ticket Task
+        call: unified-tickets.gettickettask
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatetickettask
+        description: Update Ticket Task
+        call: unified-tickets.updatetickettask
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-tickets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Revert Unified API — Tickets. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-ticket-collections
+      description: List Ticket Collections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-tickets.getticketcollections
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-ticket-tasks
+      description: List Ticket Tasks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-tickets.gettickettasks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-ticket-task
+      description: Create Ticket Task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-tickets.createtickettask
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ticket-task
+      description: Get Ticket Task
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-tickets.gettickettask
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-ticket-task
+      description: Update Ticket Task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: unified-tickets.updatetickettask
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

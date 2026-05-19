@@ -1,0 +1,189 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Revert Unified API — CRM Leads
+  description: 'Revert Unified API — CRM Leads. 4 operations. Lead operation: List CRM Leads. Self-contained Naftiko capability
+    covering one Revert business surface.'
+  tags:
+  - Revert
+  - CRM Leads
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REVERT_API_KEY: REVERT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-crm-leads
+    baseUri: https://api.revert.dev
+    description: Revert Unified API — CRM Leads business capability. Self-contained, no shared references.
+    resources:
+    - name: crm-leads
+      path: /crm/leads
+      operations:
+      - name: getcrmleads
+        method: GET
+        description: List CRM Leads
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcrmlead
+        method: POST
+        description: Create CRM Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: crm-leads-id
+      path: /crm/leads/{id}
+      operations:
+      - name: getcrmlead
+        method: GET
+        description: Get CRM Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: updatecrmlead
+        method: PATCH
+        description: Update CRM Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-revert-api-token
+      value: '{{env.REVERT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: unified-crm-leads-rest
+    port: 8080
+    description: REST adapter for Revert Unified API — CRM Leads. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/crm/leads
+      name: crm-leads
+      description: REST surface for crm-leads.
+      operations:
+      - method: GET
+        name: getcrmleads
+        description: List CRM Leads
+        call: unified-crm-leads.getcrmleads
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcrmlead
+        description: Create CRM Lead
+        call: unified-crm-leads.createcrmlead
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/crm/leads/{id}
+      name: crm-leads-id
+      description: REST surface for crm-leads-id.
+      operations:
+      - method: GET
+        name: getcrmlead
+        description: Get CRM Lead
+        call: unified-crm-leads.getcrmlead
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecrmlead
+        description: Update CRM Lead
+        call: unified-crm-leads.updatecrmlead
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-crm-leads-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Revert Unified API — CRM Leads. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-crm-leads
+      description: List CRM Leads
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-crm-leads.getcrmleads
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-crm-lead
+      description: Create CRM Lead
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-crm-leads.createcrmlead
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-crm-lead
+      description: Get CRM Lead
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-crm-leads.getcrmlead
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-crm-lead
+      description: Update CRM Lead
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: unified-crm-leads.updatecrmlead
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

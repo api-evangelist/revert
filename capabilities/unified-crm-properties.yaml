@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Revert Unified API — CRM Properties
+  description: 'Revert Unified API — CRM Properties. 2 operations. Lead operation: List CRM Properties. Self-contained Naftiko
+    capability covering one Revert business surface.'
+  tags:
+  - Revert
+  - CRM Properties
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    REVERT_API_KEY: REVERT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unified-crm-properties
+    baseUri: https://api.revert.dev
+    description: Revert Unified API — CRM Properties business capability. Self-contained, no shared references.
+    resources:
+    - name: crm-properties
+      path: /crm/properties
+      operations:
+      - name: getcrmproperties
+        method: GET
+        description: List CRM Properties
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcrmproperty
+        method: POST
+        description: Create CRM Property
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-revert-api-token
+      value: '{{env.REVERT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: unified-crm-properties-rest
+    port: 8080
+    description: REST adapter for Revert Unified API — CRM Properties. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/crm/properties
+      name: crm-properties
+      description: REST surface for crm-properties.
+      operations:
+      - method: GET
+        name: getcrmproperties
+        description: List CRM Properties
+        call: unified-crm-properties.getcrmproperties
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcrmproperty
+        description: Create CRM Property
+        call: unified-crm-properties.createcrmproperty
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unified-crm-properties-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Revert Unified API — CRM Properties. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-crm-properties
+      description: List CRM Properties
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unified-crm-properties.getcrmproperties
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-crm-property
+      description: Create CRM Property
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unified-crm-properties.createcrmproperty
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
