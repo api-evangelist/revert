@@ -1,88 +1,61 @@
-# Revert
+# Revert (revert)
 
-Revert is an open-source unified API platform that makes it easy to build product integrations 10x faster. It provides a single standardized API to integrate with CRMs, ticketing systems, chat platforms, and accounting software, with built-in OAuth management, token refresh, and retry logic.
+Revert is an open-source unified API platform that makes it easy to build product integrations 10x faster. It provides a single standardized API to integrate with CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more, with built-in OAuth management, token refresh, and retry logic.
 
-**Website:** https://www.revert.dev/  
-**GitHub:** https://github.com/revertinc/revert  
-**Documentation:** https://docs.revert.dev  
-**Type:** company  
-**License:** AGPL-3.0
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Type:** Index
+
+## Tags
+
+- Integrations
+- CRM
+- Unified API
+- Open Source
+
+## Timestamps
+
+- **Created:** 2026-03-16
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Revert Unified API
 
-Single API surface normalizing operations across multiple third-party platforms:
+The Revert Unified API provides a single interface to integrate with multiple third-party platforms across CRM, ticketing, chat, and accounting categories. Developers authenticate once per tenant using OAuth 2.0 and access a normalized data model across all supported providers.
 
-- **CRM:** Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM
-- **Ticketing:** Jira, Asana
-- **Chat:** Slack, Microsoft Teams, Discord
-- **Accounting:** Xero, QuickBooks
+- **Human URL:** [https://www.revert.dev/](https://www.revert.dev/)
+- **Base URL:** `https://api.revert.dev`
 
-**Base URL:** https://api.revert.dev  
-**Authentication:** API Key (`x-revert-api-token` header) + Tenant ID (`x-revert-t-id` header)
+#### Tags
 
-## Artifacts
+- Integrations
+- CRM
+- Unified API
+- Salesforce
+- HubSpot
+- Slack
+- Jira
 
-### OpenAPI Specs
+#### Properties
 
-| File | Description |
-|------|-------------|
-| [revert-unified-api-openapi.yml](openapi/revert-unified-api-openapi.yml) | Full Revert Unified API including CRM, Tickets, Chat, and Accounting endpoints |
+- [Documentation](https://docs.revert.dev)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/openapi/revert-unified-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Git Hub](https://github.com/revertinc/revert)
+- [GitHub Organization](https://github.com/revertinc)
+- [Postman Collection](collections/revert-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/revert-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-### Rules
+## Common Properties
 
-| File | Description |
-|------|-------------|
-| [revert-rules.yml](rules/revert-rules.yml) | Spectral ruleset enforcing Revert API conventions |
-
-### Capabilities
-
-| File | Description |
-|------|-------------|
-| [crm-integration.yaml](capabilities/crm-integration.yaml) | Unified CRM workflow: contacts, companies, deals, leads |
-| [shared/revert-unified-api.yaml](capabilities/shared/revert-unified-api.yaml) | Shared per-API capability definition |
-
-### JSON Schema
-
-| File | Description |
-|------|-------------|
-| [revert-contact-schema.json](json-schema/revert-contact-schema.json) | Normalized CRM Contact entity schema |
-| [revert-deal-schema.json](json-schema/revert-deal-schema.json) | Normalized CRM Deal/Opportunity entity schema |
-
-### JSON Structure
-
-| File | Description |
-|------|-------------|
-| [revert-contact-structure.json](json-structure/revert-contact-structure.json) | Contact entity field documentation |
-
-### JSON-LD
-
-| File | Description |
-|------|-------------|
-| [revert-context.jsonld](json-ld/revert-context.jsonld) | JSON-LD context mapping Revert vocabulary to schema.org |
-
-### Examples
-
-| File | Description |
-|------|-------------|
-| [revert-get-contacts-example.json](examples/revert-get-contacts-example.json) | List CRM contacts request/response example |
-| [revert-create-deal-example.json](examples/revert-create-deal-example.json) | Create CRM deal request/response example |
-
-### Vocabulary
-
-| File | Description |
-|------|-------------|
-| [revert-vocabulary.yml](vocabulary/revert-vocabulary.yml) | Domain vocabulary for Revert integration platform concepts |
-
-## Key Features
-
-- **Unified CRM API** — One interface for Salesforce, HubSpot, Zoho, Pipedrive, and Close
-- **OAuth Management** — Automatic token lifecycle with refresh and failure handling
-- **Self-Hosting** — Full Docker Compose deployment for data sovereignty
-- **Drop-in UI SDKs** — React, Vue, and JavaScript components for OAuth connection flows
-- **Field Mapping** — Provider-native fields normalized plus raw `additional` fields preserved
+- [Website](https://www.revert.dev/)
+- [Git Hub](https://github.com/revertinc/revert)
+- [Documentation](https://docs.revert.dev)
+- [Authentication](https://docs.revert.dev)
 
 ## Maintainers
 
-- Kin Lane — kin@apievangelist.com
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
