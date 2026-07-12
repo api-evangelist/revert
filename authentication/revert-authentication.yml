@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/revert-unified-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiTokenAuth
+  type: apiKey
+  in: header
+  parameter: x-revert-api-token
+  description: Your official API key for accessing Revert APIs
+  sources:
+  - openapi/revert-unified-api-openapi.yml
