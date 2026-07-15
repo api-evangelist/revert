@@ -107,6 +107,8 @@ solutions:
   - name: SaaS Integration Platform
     description: Build multi-CRM, multi-ticketing, and multi-chat integrations in your SaaS product
 common:
+  - type: AgenticAccess
+    url: agentic-access/revert-agentic-access.yml
   - type: Authentication
     url: authentication/revert-authentication.yml
   - type: Website
