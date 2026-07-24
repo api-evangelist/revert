@@ -1,0 +1,219 @@
+openapi: 3.0.3
+info:
+  title: Revert Unified Accounting CRM Deals API
+  description: Revert is an open-source unified API platform that makes it easy to build integrations with third-party services including CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more — all through a single standardized API.
+  version: 1.0.0
+  contact:
+    url: https://www.revert.dev/
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE.txt
+servers:
+- url: https://api.revert.dev
+  description: Production
+- url: https://api-staging.revert.dev
+  description: Staging
+security:
+- ApiTokenAuth: []
+tags:
+- name: CRM Deals
+  description: Unified CRM deal/opportunity operations
+paths:
+  /crm/deals/{id}:
+    get:
+      operationId: getCrmDeal
+      summary: Get CRM Deal
+      description: Get details of a specific CRM deal/opportunity by ID
+      tags:
+      - CRM Deals
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Deal details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Deal'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmDeal
+      summary: Update CRM Deal
+      description: Update an existing CRM deal/opportunity
+      tags:
+      - CRM Deals
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deal'
+      responses:
+        '200':
+          description: Deal updated
+        '401':
+          description: Unauthorized
+  /crm/deals:
+    get:
+      operationId: getCrmDeals
+      summary: List CRM Deals
+      description: Get all CRM deals/opportunities with pagination
+      tags:
+      - CRM Deals
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of deals
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponse'
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Deal'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmDeal
+      summary: Create CRM Deal
+      description: Create a new CRM deal/opportunity
+      tags:
+      - CRM Deals
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deal'
+      responses:
+        '200':
+          description: Deal created
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Deal:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        stage:
+          type: string
+        probability:
+          type: number
+        closeDate:
+          type: string
+          format: date
+        ownerId:
+          type: string
+        contactId:
+          type: string
+        companyId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
+  parameters:
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+  securitySchemes:
+    ApiTokenAuth:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your official API key for accessing Revert APIs

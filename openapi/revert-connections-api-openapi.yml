@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Revert Unified Accounting Connections API
+  description: Revert is an open-source unified API platform that makes it easy to build integrations with third-party services including CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more — all through a single standardized API.
+  version: 1.0.0
+  contact:
+    url: https://www.revert.dev/
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE.txt
+servers:
+- url: https://api.revert.dev
+  description: Production
+- url: https://api-staging.revert.dev
+  description: Staging
+security:
+- ApiTokenAuth: []
+tags:
+- name: Connections
+  description: Manage third-party OAuth connections and webhooks
+paths:
+  /connection:
+    get:
+      operationId: getConnection
+      summary: Get Connection Details
+      description: Get details of a connection for a specific tenant
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Connection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+  /connection/webhook:
+    post:
+      operationId: createConnectionWebhook
+      summary: Create Connection Webhook
+      description: Create a webhook for a tenant connection
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhookUrl:
+                  type: string
+      responses:
+        '200':
+          description: Webhook created
+        '401':
+          description: Unauthorized
+    get:
+      operationId: getConnectionWebhook
+      summary: Get Connection Webhook
+      description: Get webhook configuration for a tenant connection
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Webhook details
+        '401':
+          description: Unauthorized
+    delete:
+      operationId: deleteConnectionWebhook
+      summary: Delete Connection Webhook
+      description: Delete a webhook for a tenant connection
+      tags:
+      - Connections
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Webhook deleted
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Connection:
+      type: object
+      properties:
+        tp_id:
+          type: string
+          description: Third-party provider ID (e.g., hubspot, salesforce)
+        t_id:
+          type: string
+          description: Tenant ID
+        tp_customer_id:
+          type: string
+        tp_account_url:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+  parameters:
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+  securitySchemes:
+    ApiTokenAuth:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your official API key for accessing Revert APIs

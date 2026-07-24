@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: Revert Unified Accounting CRM Tasks API
+  description: Revert is an open-source unified API platform that makes it easy to build integrations with third-party services including CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more — all through a single standardized API.
+  version: 1.0.0
+  contact:
+    url: https://www.revert.dev/
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE.txt
+servers:
+- url: https://api.revert.dev
+  description: Production
+- url: https://api-staging.revert.dev
+  description: Staging
+security:
+- ApiTokenAuth: []
+tags:
+- name: CRM Tasks
+  description: Unified CRM task operations
+paths:
+  /crm/tasks/{id}:
+    get:
+      operationId: getCrmTask
+      summary: Get CRM Task
+      description: Get details of a specific CRM task by ID
+      tags:
+      - CRM Tasks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Task details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmTask
+      summary: Update CRM Task
+      description: Update an existing CRM task
+      tags:
+      - CRM Tasks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Task updated
+        '401':
+          description: Unauthorized
+  /crm/tasks:
+    get:
+      operationId: getCrmTasks
+      summary: List CRM Tasks
+      description: Get all CRM tasks with pagination
+      tags:
+      - CRM Tasks
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponse'
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmTask
+      summary: Create CRM Task
+      description: Create a new CRM task
+      tags:
+      - CRM Tasks
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Task created
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        subject:
+          type: string
+        description:
+          type: string
+        dueDate:
+          type: string
+          format: date
+        status:
+          type: string
+        priority:
+          type: string
+        ownerId:
+          type: string
+        contactId:
+          type: string
+        dealId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
+  parameters:
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+  securitySchemes:
+    ApiTokenAuth:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your official API key for accessing Revert APIs
