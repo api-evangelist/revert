@@ -6,7 +6,20 @@ description: >-
   systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more, with built-in
   OAuth management, token refresh, and retry logic.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/revert.png
 tags:
   - Integrations
   - CRM
@@ -17,35 +30,214 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: revert:revert-unified-api
-    name: Revert Unified API
-    description: >-
-      The Revert Unified API provides a single interface to integrate with multiple third-party platforms across CRM,
-      ticketing, chat, and accounting categories. Developers authenticate once per tenant using OAuth 2.0 and access a
-      normalized data model across all supported providers.
-    humanURL: https://www.revert.dev/
-    baseURL: https://api.revert.dev
-    tags:
-      - Integrations
-      - CRM
-      - Unified API
-      - Salesforce
-      - HubSpot
-      - Slack
-      - Jira
-    properties:
-      - type: Documentation
-        url: https://docs.revert.dev
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/openapi/revert-unified-api-openapi.yml
-      - type: GitHub
-        url: https://github.com/revertinc/revert
-      - type: GitHubOrganization
-        url: https://github.com/revertinc
-    contact:
-      - FN: Revert Support
-        url: https://www.revert.dev/
-        email: security@revert.dev
+- aid: revert:revert-accounting-api
+  name: Revert Accounting API
+  description: Unified accounting operations across Xero and QuickBooks
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-accounting-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-chat-api
+  name: Revert Chat API
+  description: Unified chat operations across Slack, Microsoft Teams, and Discord
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - Chat
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-chat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-connections-api
+  name: Revert Connections API
+  description: Manage third-party OAuth connections and webhooks
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-connections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-companies-api
+  name: Revert CRM Companies API
+  description: Unified CRM company/account operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-companies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-contacts-api
+  name: Revert CRM Contacts API
+  description: Unified CRM contact operations across Salesforce, HubSpot, Zoho, Pipedrive, and Close
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-deals-api
+  name: Revert CRM Deals API
+  description: Unified CRM deal/opportunity operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Deals
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-deals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-events-api
+  name: Revert CRM Events API
+  description: Unified CRM event/activity operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Events
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-leads-api
+  name: Revert CRM Leads API
+  description: Unified CRM lead operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Leads
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-leads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-notes-api
+  name: Revert CRM Notes API
+  description: Unified CRM note operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-notes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-properties-api
+  name: Revert CRM Properties API
+  description: Unified CRM custom property operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Properties
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-properties-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-tasks-api
+  name: Revert CRM Tasks API
+  description: Unified CRM task operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-crm-users-api
+  name: Revert CRM Users API
+  description: Unified CRM user operations
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM Users
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-crm-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+- aid: revert:revert-tickets-api
+  name: Revert Tickets API
+  description: Unified ticketing operations across Jira and Asana
+  humanURL: https://www.revert.dev/
+  baseURL: https://api.revert.dev
+  tags:
+  - Tickets
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-tickets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.revert.dev
+  - type: GitHub
+    url: https://github.com/revertinc/revert
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
 features:
   - name: Unified CRM API
     description: Single API surface for Salesforce, HubSpot, Zoho CRM, Pipedrive, and Close CRM
