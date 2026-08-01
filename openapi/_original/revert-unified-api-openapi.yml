@@ -1,0 +1,1729 @@
+openapi: 3.0.3
+info:
+  title: Revert Unified API
+  description: >-
+    Revert is an open-source unified API platform that makes it easy to build
+    integrations with third-party services including CRMs (Salesforce, HubSpot,
+    Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting
+    (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more — all
+    through a single standardized API.
+  version: 1.0.0
+  contact:
+    url: https://www.revert.dev/
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE.txt
+servers:
+  - url: https://api.revert.dev
+    description: Production
+  - url: https://api-staging.revert.dev
+    description: Staging
+tags:
+  - name: Connections
+    description: Manage third-party OAuth connections and webhooks
+  - name: CRM Contacts
+    description: Unified CRM contact operations across Salesforce, HubSpot, Zoho, Pipedrive, and Close
+  - name: CRM Companies
+    description: Unified CRM company/account operations
+  - name: CRM Deals
+    description: Unified CRM deal/opportunity operations
+  - name: CRM Leads
+    description: Unified CRM lead operations
+  - name: CRM Notes
+    description: Unified CRM note operations
+  - name: CRM Tasks
+    description: Unified CRM task operations
+  - name: CRM Events
+    description: Unified CRM event/activity operations
+  - name: CRM Users
+    description: Unified CRM user operations
+  - name: CRM Properties
+    description: Unified CRM custom property operations
+  - name: Tickets
+    description: Unified ticketing operations across Jira and Asana
+  - name: Chat
+    description: Unified chat operations across Slack, Microsoft Teams, and Discord
+  - name: Accounting
+    description: Unified accounting operations across Xero and QuickBooks
+security:
+  - ApiTokenAuth: []
+components:
+  securitySchemes:
+    ApiTokenAuth:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your official API key for accessing Revert APIs
+  parameters:
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
+    Associations:
+      name: associations
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of associated objects to include
+  schemas:
+    ResponseStatus:
+      type: string
+      enum:
+        - ok
+        - error
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        company:
+          type: string
+        title:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+          description: Non-unified fields from the source CRM
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        website:
+          type: string
+        industry:
+          type: string
+        numberOfEmployees:
+          type: integer
+        phone:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    Deal:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        stage:
+          type: string
+        probability:
+          type: number
+        closeDate:
+          type: string
+          format: date
+        ownerId:
+          type: string
+        contactId:
+          type: string
+        companyId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    Lead:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        company:
+          type: string
+        source:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        contactId:
+          type: string
+        dealId:
+          type: string
+        companyId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        subject:
+          type: string
+        description:
+          type: string
+        dueDate:
+          type: string
+          format: date
+        status:
+          type: string
+        priority:
+          type: string
+        ownerId:
+          type: string
+        contactId:
+          type: string
+        dealId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        subject:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        location:
+          type: string
+        contactId:
+          type: string
+        dealId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        priority:
+          type: string
+        assigneeId:
+          type: string
+        collectionId:
+          type: string
+        dueDate:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+        additional:
+          type: object
+    TicketCollection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        remoteId:
+          type: string
+    ChatChannel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        memberCount:
+          type: integer
+        remoteId:
+          type: string
+    ChatMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        channelId:
+          type: string
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+    AccountingAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        balance:
+          type: number
+        currency:
+          type: string
+        remoteId:
+          type: string
+    Connection:
+      type: object
+      properties:
+        tp_id:
+          type: string
+          description: Third-party provider ID (e.g., hubspot, salesforce)
+        t_id:
+          type: string
+          description: Tenant ID
+        tp_customer_id:
+          type: string
+        tp_account_url:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        message:
+          type: string
+        error:
+          type: string
+paths:
+  /connection:
+    get:
+      operationId: getConnection
+      summary: Get Connection Details
+      description: Get details of a connection for a specific tenant
+      tags:
+        - Connections
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Connection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+  /connection/webhook:
+    post:
+      operationId: createConnectionWebhook
+      summary: Create Connection Webhook
+      description: Create a webhook for a tenant connection
+      tags:
+        - Connections
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhookUrl:
+                  type: string
+      responses:
+        '200':
+          description: Webhook created
+        '401':
+          description: Unauthorized
+    get:
+      operationId: getConnectionWebhook
+      summary: Get Connection Webhook
+      description: Get webhook configuration for a tenant connection
+      tags:
+        - Connections
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Webhook details
+        '401':
+          description: Unauthorized
+    delete:
+      operationId: deleteConnectionWebhook
+      summary: Delete Connection Webhook
+      description: Delete a webhook for a tenant connection
+      tags:
+        - Connections
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Webhook deleted
+        '401':
+          description: Unauthorized
+  /crm/contacts/{id}:
+    get:
+      operationId: getCrmContact
+      summary: Get CRM Contact
+      description: Get details of a specific CRM contact by ID
+      tags:
+        - CRM Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Associations'
+      responses:
+        '200':
+          description: Contact details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Contact'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+    patch:
+      operationId: updateCrmContact
+      summary: Update CRM Contact
+      description: Update an existing CRM contact
+      tags:
+        - CRM Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Contact'
+                - type: object
+                  properties:
+                    additional:
+                      type: object
+      responses:
+        '200':
+          description: Contact updated
+        '401':
+          description: Unauthorized
+  /crm/contacts:
+    get:
+      operationId: getCrmContacts
+      summary: List CRM Contacts
+      description: Get all CRM contacts with pagination
+      tags:
+        - CRM Contacts
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Associations'
+      responses:
+        '200':
+          description: List of contacts
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Contact'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmContact
+      summary: Create CRM Contact
+      description: Create a new CRM contact
+      tags:
+        - CRM Contacts
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Contact'
+                - type: object
+                  properties:
+                    additional:
+                      type: object
+      responses:
+        '200':
+          description: Contact created
+        '401':
+          description: Unauthorized
+  /crm/contacts/search:
+    post:
+      operationId: searchCrmContacts
+      summary: Search CRM Contacts
+      description: Search CRM contacts by criteria
+      tags:
+        - CRM Contacts
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchCriteria:
+                  type: object
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Contact'
+        '401':
+          description: Unauthorized
+  /crm/companies/{id}:
+    get:
+      operationId: getCrmCompany
+      summary: Get CRM Company
+      description: Get details of a specific CRM company/account by ID
+      tags:
+        - CRM Companies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Associations'
+      responses:
+        '200':
+          description: Company details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Company'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmCompany
+      summary: Update CRM Company
+      description: Update an existing CRM company/account
+      tags:
+        - CRM Companies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '200':
+          description: Company updated
+        '401':
+          description: Unauthorized
+  /crm/companies:
+    get:
+      operationId: getCrmCompanies
+      summary: List CRM Companies
+      description: Get all CRM companies/accounts with pagination
+      tags:
+        - CRM Companies
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Company'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmCompany
+      summary: Create CRM Company
+      description: Create a new CRM company/account
+      tags:
+        - CRM Companies
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '200':
+          description: Company created
+        '401':
+          description: Unauthorized
+  /crm/deals/{id}:
+    get:
+      operationId: getCrmDeal
+      summary: Get CRM Deal
+      description: Get details of a specific CRM deal/opportunity by ID
+      tags:
+        - CRM Deals
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Deal details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Deal'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmDeal
+      summary: Update CRM Deal
+      description: Update an existing CRM deal/opportunity
+      tags:
+        - CRM Deals
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deal'
+      responses:
+        '200':
+          description: Deal updated
+        '401':
+          description: Unauthorized
+  /crm/deals:
+    get:
+      operationId: getCrmDeals
+      summary: List CRM Deals
+      description: Get all CRM deals/opportunities with pagination
+      tags:
+        - CRM Deals
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of deals
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Deal'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmDeal
+      summary: Create CRM Deal
+      description: Create a new CRM deal/opportunity
+      tags:
+        - CRM Deals
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deal'
+      responses:
+        '200':
+          description: Deal created
+        '401':
+          description: Unauthorized
+  /crm/leads/{id}:
+    get:
+      operationId: getCrmLead
+      summary: Get CRM Lead
+      description: Get details of a specific CRM lead by ID
+      tags:
+        - CRM Leads
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Lead details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Lead'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmLead
+      summary: Update CRM Lead
+      description: Update an existing CRM lead
+      tags:
+        - CRM Leads
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lead'
+      responses:
+        '200':
+          description: Lead updated
+        '401':
+          description: Unauthorized
+  /crm/leads:
+    get:
+      operationId: getCrmLeads
+      summary: List CRM Leads
+      description: Get all CRM leads with pagination
+      tags:
+        - CRM Leads
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of leads
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Lead'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmLead
+      summary: Create CRM Lead
+      description: Create a new CRM lead
+      tags:
+        - CRM Leads
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lead'
+      responses:
+        '200':
+          description: Lead created
+        '401':
+          description: Unauthorized
+  /crm/notes/{id}:
+    get:
+      operationId: getCrmNote
+      summary: Get CRM Note
+      description: Get details of a specific CRM note by ID
+      tags:
+        - CRM Notes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Note details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Note'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmNote
+      summary: Update CRM Note
+      description: Update an existing CRM note
+      tags:
+        - CRM Notes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '200':
+          description: Note updated
+        '401':
+          description: Unauthorized
+  /crm/notes:
+    get:
+      operationId: getCrmNotes
+      summary: List CRM Notes
+      description: Get all CRM notes with pagination
+      tags:
+        - CRM Notes
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Note'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmNote
+      summary: Create CRM Note
+      description: Create a new CRM note
+      tags:
+        - CRM Notes
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '200':
+          description: Note created
+        '401':
+          description: Unauthorized
+  /crm/tasks/{id}:
+    get:
+      operationId: getCrmTask
+      summary: Get CRM Task
+      description: Get details of a specific CRM task by ID
+      tags:
+        - CRM Tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Task details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmTask
+      summary: Update CRM Task
+      description: Update an existing CRM task
+      tags:
+        - CRM Tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Task updated
+        '401':
+          description: Unauthorized
+  /crm/tasks:
+    get:
+      operationId: getCrmTasks
+      summary: List CRM Tasks
+      description: Get all CRM tasks with pagination
+      tags:
+        - CRM Tasks
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmTask
+      summary: Create CRM Task
+      description: Create a new CRM task
+      tags:
+        - CRM Tasks
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Task created
+        '401':
+          description: Unauthorized
+  /crm/events/{id}:
+    get:
+      operationId: getCrmEvent
+      summary: Get CRM Event
+      description: Get details of a specific CRM event/activity by ID
+      tags:
+        - CRM Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Event details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateCrmEvent
+      summary: Update CRM Event
+      description: Update an existing CRM event/activity
+      tags:
+        - CRM Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: Event updated
+        '401':
+          description: Unauthorized
+    delete:
+      operationId: deleteCrmEvent
+      summary: Delete CRM Event
+      description: Delete a CRM event/activity by ID
+      tags:
+        - CRM Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Event deleted
+        '401':
+          description: Unauthorized
+  /crm/events:
+    get:
+      operationId: getCrmEvents
+      summary: List CRM Events
+      description: Get all CRM events/activities with pagination
+      tags:
+        - CRM Events
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmEvent
+      summary: Create CRM Event
+      description: Create a new CRM event/activity
+      tags:
+        - CRM Events
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: Event created
+        '401':
+          description: Unauthorized
+  /crm/users/{id}:
+    get:
+      operationId: getCrmUser
+      summary: Get CRM User
+      description: Get details of a specific CRM user by ID
+      tags:
+        - CRM Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+  /crm/users:
+    get:
+      operationId: getCrmUsers
+      summary: List CRM Users
+      description: Get all CRM users with pagination
+      tags:
+        - CRM Users
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmUser
+      summary: Create CRM User
+      description: Create a new CRM user
+      tags:
+        - CRM Users
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User created
+        '401':
+          description: Unauthorized
+  /crm/properties:
+    get:
+      operationId: getCrmProperties
+      summary: List CRM Properties
+      description: Get all available CRM custom properties for the connected provider
+      tags:
+        - CRM Properties
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of properties
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCrmProperty
+      summary: Create CRM Property
+      description: Create a new custom CRM property/field
+      tags:
+        - CRM Properties
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Property created
+        '401':
+          description: Unauthorized
+  /crm/proxy:
+    post:
+      operationId: crmProxy
+      summary: CRM Proxy Request
+      description: Make a direct proxy request to the underlying CRM provider API
+      tags:
+        - CRM Contacts
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  type: string
+                path:
+                  type: string
+                body:
+                  type: object
+      responses:
+        '200':
+          description: Proxy response
+        '401':
+          description: Unauthorized
+  /ticket/tasks/{id}:
+    get:
+      operationId: getTicketTask
+      summary: Get Ticket Task
+      description: Get details of a specific ticketing task by ID
+      tags:
+        - Tickets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Ticket task details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/ResponseStatus'
+                  result:
+                    $ref: '#/components/schemas/Ticket'
+        '401':
+          description: Unauthorized
+    patch:
+      operationId: updateTicketTask
+      summary: Update Ticket Task
+      description: Update an existing ticketing task
+      tags:
+        - Tickets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      responses:
+        '200':
+          description: Ticket task updated
+        '401':
+          description: Unauthorized
+  /ticket/tasks:
+    get:
+      operationId: getTicketTasks
+      summary: List Ticket Tasks
+      description: Get all ticketing tasks with pagination
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of ticket tasks
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createTicketTask
+      summary: Create Ticket Task
+      description: Create a new ticketing task
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      responses:
+        '200':
+          description: Ticket task created
+        '401':
+          description: Unauthorized
+  /ticket/collections:
+    get:
+      operationId: getTicketCollections
+      summary: List Ticket Collections
+      description: Get all ticket collections (projects/boards) with pagination
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of collections
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TicketCollection'
+        '401':
+          description: Unauthorized
+  /chat/channels:
+    get:
+      operationId: getChatChannels
+      summary: List Chat Channels
+      description: Get all chat channels with pagination
+      tags:
+        - Chat
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of channels
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ChatChannel'
+        '401':
+          description: Unauthorized
+  /chat/messages:
+    get:
+      operationId: getChatMessages
+      summary: List Chat Messages
+      description: Get chat messages with pagination
+      tags:
+        - Chat
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ChatMessage'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: sendChatMessage
+      summary: Send Chat Message
+      description: Send a new chat message to a channel
+      tags:
+        - Chat
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessage'
+      responses:
+        '200':
+          description: Message sent
+        '401':
+          description: Unauthorized
+  /accounting/accounts:
+    get:
+      operationId: getAccountingAccounts
+      summary: List Accounting Accounts
+      description: Get all accounting chart-of-accounts entries
+      tags:
+        - Accounting
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AccountingAccount'
+        '401':
+          description: Unauthorized
+  /accounting/expenses:
+    get:
+      operationId: getAccountingExpenses
+      summary: List Accounting Expenses
+      description: Get all accounting expense records
+      tags:
+        - Accounting
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: List of expenses
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createAccountingExpense
+      summary: Create Accounting Expense
+      description: Create a new accounting expense record
+      tags:
+        - Accounting
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Expense created
+        '401':
+          description: Unauthorized

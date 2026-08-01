@@ -1,0 +1,38 @@
+{
+  "provider": "revert",
+  "sources": [
+    "revert-accounting-api-openapi.yml",
+    "revert-chat-api-openapi.yml",
+    "revert-connections-api-openapi.yml",
+    "revert-crm-companies-api-openapi.yml",
+    "revert-crm-contacts-api-openapi.yml",
+    "revert-crm-deals-api-openapi.yml",
+    "revert-crm-events-api-openapi.yml",
+    "revert-crm-leads-api-openapi.yml",
+    "revert-crm-notes-api-openapi.yml",
+    "revert-crm-properties-api-openapi.yml",
+    "revert-crm-tasks-api-openapi.yml",
+    "revert-crm-users-api-openapi.yml",
+    "revert-tickets-api-openapi.yml"
+  ],
+  "outputs": [
+    "revert-accounting-api-openapi.yml",
+    "revert-chat-api-openapi.yml",
+    "revert-connections-api-openapi.yml",
+    "revert-crm-companies-api-openapi.yml",
+    "revert-crm-contacts-api-openapi.yml",
+    "revert-crm-deals-api-openapi.yml",
+    "revert-crm-events-api-openapi.yml",
+    "revert-crm-leads-api-openapi.yml",
+    "revert-crm-notes-api-openapi.yml",
+    "revert-crm-properties-api-openapi.yml",
+    "revert-crm-tasks-api-openapi.yml",
+    "revert-crm-users-api-openapi.yml",
+    "revert-tickets-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
