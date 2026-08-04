@@ -299,6 +299,16 @@ solutions:
   - name: SaaS Integration Platform
     description: Build multi-CRM, multi-ticketing, and multi-chat integrations in your SaaS product
 common:
+  - type: GitHubOrganization
+    url: https://github.com/revertinc
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/revertdev
+  - type: Plans
+    url: plans/revert-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/revert-rate-limits.yml
+  - type: FinOps
+    url: finops/revert-finops.yml
   - type: AgenticAccess
     url: agentic-access/revert-agentic-access.yml
   - type: Authentication
