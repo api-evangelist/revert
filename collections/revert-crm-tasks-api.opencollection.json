@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revert Unified Accounting CRM Tasks API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-revert-api-token",
+      "value": "{{x-revert-api-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get CRM Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/crm/tasks/:id",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              }
+            ]
+          },
+          "docs": "Get details of a specific CRM task by ID"
+        },
+        {
+          "info": {
+            "name": "Update CRM Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.revert.dev/crm/tasks/:id",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing CRM task"
+        },
+        {
+          "info": {
+            "name": "List CRM Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/crm/tasks",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next/previous page"
+              }
+            ]
+          },
+          "docs": "Get all CRM tasks with pagination"
+        },
+        {
+          "info": {
+            "name": "Create CRM Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revert.dev/crm/tasks",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new CRM task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

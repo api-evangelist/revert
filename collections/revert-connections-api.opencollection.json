@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revert Unified Accounting Connections API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-revert-api-token",
+      "value": "{{x-revert-api-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Connection Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/connection",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get details of a connection for a specific tenant"
+        },
+        {
+          "info": {
+            "name": "Get Connection Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/connection/webhook",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get webhook configuration for a tenant connection"
+        },
+        {
+          "info": {
+            "name": "Create Connection Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revert.dev/connection/webhook",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a webhook for a tenant connection"
+        },
+        {
+          "info": {
+            "name": "Delete Connection Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.revert.dev/connection/webhook",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Delete a webhook for a tenant connection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

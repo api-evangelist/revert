@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revert Unified Accounting CRM Properties API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-revert-api-token",
+      "value": "{{x-revert-api-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Properties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List CRM Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/crm/properties",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all available CRM custom properties for the connected provider"
+        },
+        {
+          "info": {
+            "name": "Create CRM Property",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revert.dev/crm/properties",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new custom CRM property/field"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

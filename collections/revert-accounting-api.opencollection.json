@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revert Unified Accounting API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-revert-api-token",
+      "value": "{{x-revert-api-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Accounting Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/accounting/accounts",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next/previous page"
+              }
+            ]
+          },
+          "docs": "Get all accounting chart-of-accounts entries"
+        },
+        {
+          "info": {
+            "name": "List Accounting Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/accounting/expenses",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next/previous page"
+              }
+            ]
+          },
+          "docs": "Get all accounting expense records"
+        },
+        {
+          "info": {
+            "name": "Create Accounting Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revert.dev/accounting/expenses",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new accounting expense record"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

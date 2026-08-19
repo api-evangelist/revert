@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revert Unified Accounting Chat API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-revert-api-token",
+      "value": "{{x-revert-api-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chat",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Chat Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/chat/channels",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next/previous page"
+              }
+            ]
+          },
+          "docs": "Get all chat channels with pagination"
+        },
+        {
+          "info": {
+            "name": "List Chat Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revert.dev/chat/messages",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next/previous page"
+              }
+            ]
+          },
+          "docs": "Get chat messages with pagination"
+        },
+        {
+          "info": {
+            "name": "Send Chat Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revert.dev/chat/messages",
+            "headers": [
+              {
+                "name": "x-revert-t-id",
+                "value": ""
+              },
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a new chat message to a channel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
