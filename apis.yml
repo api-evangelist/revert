@@ -1,9 +1,6 @@
 aid: revert
 name: Revert
-description: Revert is an open-source unified API platform that makes it easy to build product integrations 10x
-  faster. It provides a single standardized API to integrate with CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive,
-  Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord),
-  and more, with built-in OAuth management, token refresh, and retry logic.
+description: Revert is an open-source unified API platform that makes it easy to build product integrations 10x faster. It provides a single standardized API to integrate with CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more, with built-in OAuth management, token refresh, and retry logic.
 type: Index
 deliveryModel:
   model: saas
@@ -254,6 +251,96 @@ apis:
     url: https://github.com/revertinc/revert
   - type: GitHubOrganization
     url: https://github.com/revertinc
+- aid: revert:revert-api-connection-management-api
+  name: Revert Connection Management API
+  description: Manage linked third-party connections and connection webhooks per tenant.
+  humanURL: https://github.com/revertinc/revert
+  baseURL: https://api.revert.dev
+  tags:
+  - Connection Management
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-api-connection-management-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/revertinc/revert
+  - type: APIReference
+    url: https://docs.revert.dev/api-reference/api-reference/crm
+  - type: PostmanCollection
+    url: collections/revert-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/revert-api.opencollection.json
+- aid: revert:revert-api-crm-api
+  name: Revert CRM API
+  description: Unified CRM models - contacts, leads, companies, deals, notes, events, tasks, users.
+  humanURL: https://github.com/revertinc/revert
+  baseURL: https://api.revert.dev
+  tags:
+  - CRM
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-api-crm-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/revertinc/revert
+  - type: APIReference
+    url: https://docs.revert.dev/api-reference/api-reference/crm
+  - type: PostmanCollection
+    url: collections/revert-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/revert-api.opencollection.json
+- aid: revert:revert-api-metadata-api
+  name: Revert Metadata API
+  description: Environment / app configuration for the connect UI.
+  humanURL: https://github.com/revertinc/revert
+  baseURL: https://api.revert.dev
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-api-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/revertinc/revert
+  - type: APIReference
+    url: https://docs.revert.dev/api-reference/api-reference/crm
+  - type: PostmanCollection
+    url: collections/revert-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/revert-api.opencollection.json
+- aid: revert:revert-api-proxy-api
+  name: Revert Proxy API
+  description: Passthrough proxy to the underlying provider's native API.
+  humanURL: https://github.com/revertinc/revert
+  baseURL: https://api.revert.dev
+  tags:
+  - Proxy
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-api-proxy-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/revertinc/revert
+  - type: APIReference
+    url: https://docs.revert.dev/api-reference/api-reference/crm
+  - type: PostmanCollection
+    url: collections/revert-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/revert-api.opencollection.json
+- aid: revert:revert-api-ticketing-api
+  name: Revert Ticketing API
+  description: Unified ticketing models - tasks, users, comments, collections.
+  humanURL: https://github.com/revertinc/revert
+  baseURL: https://api.revert.dev
+  tags:
+  - Ticketing
+  properties:
+  - type: OpenAPI
+    url: openapi/revert-api-ticketing-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/revertinc/revert
+  - type: APIReference
+    url: https://docs.revert.dev/api-reference/api-reference/crm
+  - type: PostmanCollection
+    url: collections/revert-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/revert-api.opencollection.json
 features:
 - name: Unified CRM API
   description: Single API surface for Salesforce, HubSpot, Zoho CRM, Pipedrive, and Close CRM
