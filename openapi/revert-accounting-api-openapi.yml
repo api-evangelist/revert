@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Revert Unified Accounting API
   description: Revert is an open-source unified API platform that makes it easy to build integrations with third-party services including CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more — all through a single standardized API.
@@ -85,7 +85,51 @@ paths:
         '401':
           description: Unauthorized
 components:
+  parameters:
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
   schemas:
+    AccountingAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        balance:
+          type: number
+        currency:
+          type: string
+        remoteId:
+          type: string
     ResponseStatus:
       type: string
       enum:
@@ -102,50 +146,6 @@ components:
         previous:
           type: string
           description: Cursor for previous page
-    AccountingAccount:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        balance:
-          type: number
-        currency:
-          type: string
-        remoteId:
-          type: string
-  parameters:
-    Cursor:
-      name: cursor
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Pagination cursor for next/previous page
-    PageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Number of results per page
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
-    ApiVersion:
-      name: x-api-version
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Optional Revert API version. Defaults to latest if missing
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

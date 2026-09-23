@@ -1,24 +1,15 @@
 {
   "provider": "revert",
   "sources": [
-    "revert-accounting-api-openapi.yml",
-    "revert-chat-api-openapi.yml",
-    "revert-connections-api-openapi.yml",
-    "revert-crm-companies-api-openapi.yml",
-    "revert-crm-contacts-api-openapi.yml",
-    "revert-crm-deals-api-openapi.yml",
-    "revert-crm-events-api-openapi.yml",
-    "revert-crm-leads-api-openapi.yml",
-    "revert-crm-notes-api-openapi.yml",
-    "revert-crm-properties-api-openapi.yml",
-    "revert-crm-tasks-api-openapi.yml",
-    "revert-crm-users-api-openapi.yml",
-    "revert-tickets-api-openapi.yml"
+    "_original/revert-unified-api-openapi.yml",
+    "revert-connection-management-api-openapi.yml",
+    "revert-crm-api-openapi.yml",
+    "revert-metadata-api-openapi.yml",
+    "revert-proxy-api-openapi.yml",
+    "revert-ticketing-api-openapi.yml"
   ],
   "outputs": [
     "revert-accounting-api-openapi.yml",
-    "revert-chat-api-openapi.yml",
-    "revert-connections-api-openapi.yml",
     "revert-crm-companies-api-openapi.yml",
     "revert-crm-contacts-api-openapi.yml",
     "revert-crm-deals-api-openapi.yml",
@@ -28,11 +19,42 @@
     "revert-crm-properties-api-openapi.yml",
     "revert-crm-tasks-api-openapi.yml",
     "revert-crm-users-api-openapi.yml",
-    "revert-tickets-api-openapi.yml"
+    "revert-chat-api-openapi.yml",
+    "revert-connections-api-openapi.yml",
+    "revert-tickets-api-openapi.yml",
+    "revert-connection-management-api-openapi.yml",
+    "revert-crm-api-openapi.yml",
+    "revert-metadata-api-openapi.yml",
+    "revert-proxy-api-openapi.yml",
+    "revert-ticketing-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
-  "notes": [],
-  "skipped": []
+  "warnings": [
+    "revert-connection-management-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /connection delete, /connection/all get, /connection/import post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "revert-crm-api-openapi.yml: previously refined output kept for 7 operation(s) no archived document covers (e.g. /crm/companies/search post, /crm/deals/search post, /crm/events/search post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "revert-metadata-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /metadata/crms get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "revert-proxy-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /ticket/proxy post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "revert-ticketing-api-openapi.yml: previously refined output kept for 6 operation(s) no archived document covers (e.g. /ticket/comments get, /ticket/comments post, /ticket/comments/{id} get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "revert-unified-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "revert-accounting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-connections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-companies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-deals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-notes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-properties-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-tasks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-crm-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "revert-tickets-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

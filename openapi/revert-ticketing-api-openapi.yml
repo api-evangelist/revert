@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: Revert Unified Chat Ticketing API
+  description: Revert is an open-source unified API for building product integrations.
+  version: '1.0'
+  contact:
+    name: Revert
+    url: https://github.com/revertinc/revert
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE
+servers:
+- url: https://api.revert.dev
+  description: Revert Cloud (hosted) - RETIRED, DNS no longer resolves as of 2026-07-12.
+- url: http://localhost:4001
+  description: Self-hosted (default SERVER_PORT=4001).
+security:
+- revertApiToken: []
+  revertTenantId: []
+tags:
+- name: Ticketing
+  description: Unified ticketing models - tasks, users, comments, collections.
+paths:
+  /ticket/users:
+    get:
+      operationId: getTicketUsers
+      tags:
+      - Ticketing
+      summary: List ticket users
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /ticket/users/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      operationId: getTicketUser
+      tags:
+      - Ticketing
+      summary: Get a ticket user
+      responses:
+        '200':
+          $ref: '#/components/responses/EntitySingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /ticket/comments:
+    get:
+      operationId: getTicketComments
+      tags:
+      - Ticketing
+      summary: List ticket comments
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTicketComment
+      tags:
+      - Ticketing
+      summary: Create a ticket comment
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateOrUpdate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /ticket/comments/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      operationId: getTicketComment
+      tags:
+      - Ticketing
+      summary: Get a ticket comment
+      responses:
+        '200':
+          $ref: '#/components/responses/EntitySingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateTicketComment
+      tags:
+      - Ticketing
+      summary: Update a ticket comment
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateOrUpdate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    EntityList:
+      description: A list of unified objects.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              next:
+                type:
+                - string
+                - 'null'
+              previous:
+                type:
+                - string
+                - 'null'
+              results:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+    CreateOrUpdate:
+      description: Create/update result.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              result: {}
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    EntitySingle:
+      description: A single unified object.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              result:
+                type: object
+                additionalProperties: true
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: The unified Revert id (or downstream remote id) of the object.
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
+  securitySchemes:
+    revertApiToken:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your Revert API key (private token) for the environment.
+    revertTenantId:
+      type: apiKey
+      in: header
+      name: x-revert-t-id
+      description: The tenant / customer id of the linked connection.

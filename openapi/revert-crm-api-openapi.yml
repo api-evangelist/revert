@@ -1,0 +1,185 @@
+openapi: 3.2.0
+info:
+  title: Revert Unified Chat CRM API
+  description: Revert is an open-source unified API for building product integrations.
+  version: '1.0'
+  contact:
+    name: Revert
+    url: https://github.com/revertinc/revert
+  license:
+    name: AGPL-3.0
+    url: https://github.com/revertinc/revert/blob/main/LICENSE
+servers:
+- url: https://api.revert.dev
+  description: Revert Cloud (hosted) - RETIRED, DNS no longer resolves as of 2026-07-12.
+- url: http://localhost:4001
+  description: Self-hosted (default SERVER_PORT=4001).
+security:
+- revertApiToken: []
+  revertTenantId: []
+tags:
+- name: CRM
+  description: Unified CRM models - contacts, leads, companies, deals, notes, events, tasks, users.
+paths:
+  /crm/ping:
+    get:
+      operationId: pingCrm
+      tags:
+      - CRM
+      summary: Health check (CRM)
+      description: Simple authenticated ping to verify credentials and connectivity.
+      responses:
+        '200':
+          $ref: '#/components/responses/Ping'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/leads/search:
+    post:
+      operationId: searchLeads
+      tags:
+      - CRM
+      summary: Search leads
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/companies/search:
+    post:
+      operationId: searchCompanies
+      tags:
+      - CRM
+      summary: Search companies
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/deals/search:
+    post:
+      operationId: searchDeals
+      tags:
+      - CRM
+      summary: Search deals
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/notes/search:
+    post:
+      operationId: searchNotes
+      tags:
+      - CRM
+      summary: Search notes
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/events/search:
+    post:
+      operationId: searchEvents
+      tags:
+      - CRM
+      summary: Search events
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /crm/tasks/search:
+    post:
+      operationId: searchCrmTasks
+      tags:
+      - CRM
+      summary: Search tasks
+      requestBody:
+        $ref: '#/components/requestBodies/Search'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    EntityList:
+      description: A list of unified objects.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              next:
+                type:
+                - string
+                - 'null'
+              previous:
+                type:
+                - string
+                - 'null'
+              results:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+    Ping:
+      description: Pong.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
+  requestBodies:
+    Search:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              searchCriteria:
+                type: object
+                additionalProperties: true
+  securitySchemes:
+    revertApiToken:
+      type: apiKey
+      in: header
+      name: x-revert-api-token
+      description: Your Revert API key (private token) for the environment.
+    revertTenantId:
+      type: apiKey
+      in: header
+      name: x-revert-t-id
+      description: The tenant / customer id of the linked connection.
