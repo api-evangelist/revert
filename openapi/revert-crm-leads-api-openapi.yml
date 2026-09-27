@@ -125,6 +125,13 @@ paths:
           description: Unauthorized
 components:
   parameters:
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
     PageSize:
       name: pageSize
       in: query
@@ -146,13 +153,6 @@ components:
       schema:
         type: string
       description: The unique customer id used when the customer linked their account
-    Fields:
-      name: fields
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Comma-separated list of fields to include in response
     Cursor:
       name: cursor
       in: query
@@ -161,6 +161,22 @@ components:
         type: string
       description: Pagination cursor for next/previous page
   schemas:
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
     Lead:
       type: object
       properties:
@@ -190,22 +206,6 @@ components:
           type: string
         additional:
           type: object
-    ResponseStatus:
-      type: string
-      enum:
-      - ok
-      - error
-    PaginatedResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
-          type: string
-          description: Cursor for next page
-        previous:
-          type: string
-          description: Cursor for previous page
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

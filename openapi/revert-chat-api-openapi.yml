@@ -126,6 +126,32 @@ components:
         type: string
       description: Pagination cursor for next/previous page
   schemas:
+    ChatChannel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        memberCount:
+          type: integer
+        remoteId:
+          type: string
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
     ChatMessage:
       type: object
       properties:
@@ -147,32 +173,6 @@ components:
       enum:
       - ok
       - error
-    PaginatedResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
-          type: string
-          description: Cursor for next page
-        previous:
-          type: string
-          description: Cursor for previous page
-    ChatChannel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: string
-        memberCount:
-          type: integer
-        remoteId:
-          type: string
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

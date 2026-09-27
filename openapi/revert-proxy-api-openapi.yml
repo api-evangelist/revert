@@ -35,13 +35,16 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
   responses:
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Proxy:
       description: The raw response from the downstream provider.
       content:
@@ -49,6 +52,12 @@ components:
           schema:
             type: object
             additionalProperties: true
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   requestBodies:
     Proxy:
       required: true
@@ -66,15 +75,6 @@ components:
                 type: object
                 additionalProperties: true
             additionalProperties: true
-  schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        errorMessage: {}
   securitySchemes:
     revertApiToken:
       type: apiKey

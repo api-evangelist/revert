@@ -115,6 +115,17 @@ components:
         type: string
       description: Pagination cursor for next/previous page
   schemas:
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
     AccountingAccount:
       type: object
       properties:
@@ -135,17 +146,6 @@ components:
       enum:
       - ok
       - error
-    PaginatedResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
-          type: string
-          description: Cursor for next page
-        previous:
-          type: string
-          description: Cursor for previous page
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

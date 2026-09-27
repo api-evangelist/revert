@@ -3,16 +3,22 @@ name: Revert
 description: Revert is an open-source unified API platform that makes it easy to build product integrations 10x faster. It provides a single standardized API to integrate with CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more, with built-in OAuth management, token refresh, and retry logic.
 type: Index
 deliveryModel:
-  model: saas
-  open_source: false
+  model: open-core
+  license: AGPL-3.0
+  license_evidence:
+    repo: revertinc/revert
+    spdx: AGPL-3.0
+    stars: 1013
+  open_source: true
   commercial: true
   callable_host: false
-  label: Hosted service · you call their endpoint
+  label: Open core · an OSS project plus a commercial hosted product
   confidence: medium
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -31,13 +37,15 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/revert.png
 tags:
 - Integration
 - CRM
-- Unified-API
-- Open-Source
+- Unified API
+- Open Source
 tags_raw:
 - Integrations
 - CRM
 - Unified API
 - Open Source
+- Unified-API
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-05-19'
@@ -241,6 +249,8 @@ apis:
   humanURL: https://www.revert.dev/
   baseURL: https://api.revert.dev
   tags:
+  - Ticketing
+  tags_raw:
   - Tickets
   properties:
   - type: OpenAPI
