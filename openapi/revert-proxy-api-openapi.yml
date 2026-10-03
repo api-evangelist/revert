@@ -35,6 +35,23 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  requestBodies:
+    Proxy:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            description: The provider-native request to forward (path, method, and body vary by provider).
+            properties:
+              path:
+                type: string
+              method:
+                type: string
+              body:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
   schemas:
     Error:
       type: object
@@ -58,23 +75,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  requestBodies:
-    Proxy:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            description: The provider-native request to forward (path, method, and body vary by provider).
-            properties:
-              path:
-                type: string
-              method:
-                type: string
-              body:
-                type: object
-                additionalProperties: true
-            additionalProperties: true
   securitySchemes:
     revertApiToken:
       type: apiKey

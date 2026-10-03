@@ -94,26 +94,9 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        errorMessage: {}
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: The unified Revert id (or downstream remote id) of the object.
-      schema:
-        type: string
   responses:
-    EntitySingle:
-      description: A single unified object.
+    CreateOrUpdate:
+      description: Create/update result.
       content:
         application/json:
           schema:
@@ -121,9 +104,15 @@ components:
             properties:
               status:
                 type: string
-              result:
-                type: object
-                additionalProperties: true
+              message:
+                type: string
+              result: {}
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     EntityList:
       description: A list of unified objects.
       content:
@@ -146,8 +135,8 @@ components:
                 items:
                   type: object
                   additionalProperties: true
-    CreateOrUpdate:
-      description: Create/update result.
+    EntitySingle:
+      description: A single unified object.
       content:
         application/json:
           schema:
@@ -155,21 +144,32 @@ components:
             properties:
               status:
                 type: string
-              message:
-                type: string
-              result: {}
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+              result:
+                type: object
+                additionalProperties: true
     Unauthorized:
       description: Missing or invalid x-revert-api-token / x-revert-t-id.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: The unified Revert id (or downstream remote id) of the object.
+      schema:
+        type: string
   securitySchemes:
     revertApiToken:
       type: apiKey

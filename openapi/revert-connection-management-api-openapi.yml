@@ -96,15 +96,39 @@ paths:
               schema:
                 type: string
 components:
+  responses:
+    Envelope:
+      description: Standard status-wrapped response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Deleted:
+      description: Deletion result.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              deleted:
+                type: boolean
+    ConnectionList:
+      description: All connections for the account.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Connection'
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        errorMessage: {}
     Envelope:
       type: object
       properties:
@@ -115,6 +139,14 @@ components:
           - string
           - 'null'
       additionalProperties: true
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
     Connection:
       type: object
       description: A linked third-party connection. Modeled from the unified Connection type.
@@ -133,38 +165,6 @@ components:
         createdAt:
           type: string
       additionalProperties: true
-  responses:
-    ConnectionList:
-      description: All connections for the account.
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Connection'
-    Deleted:
-      description: Deletion result.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              deleted:
-                type: boolean
-    Envelope:
-      description: Standard status-wrapped response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     revertApiToken:
       type: apiKey

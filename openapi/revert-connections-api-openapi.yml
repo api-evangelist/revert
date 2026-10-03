@@ -93,6 +93,21 @@ paths:
         '401':
           description: Unauthorized
 components:
+  parameters:
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
   schemas:
     Connection:
       type: object
@@ -110,21 +125,6 @@ components:
         createdAt:
           type: string
           format: date-time
-  parameters:
-    ApiVersion:
-      name: x-api-version
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Optional Revert API version. Defaults to latest if missing
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
   securitySchemes:
     ApiTokenAuth:
       type: apiKey
