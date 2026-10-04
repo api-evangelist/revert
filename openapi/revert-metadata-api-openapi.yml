@@ -39,13 +39,6 @@ paths:
         '200':
           $ref: '#/components/responses/Envelope'
 components:
-  responses:
-    Envelope:
-      description: Standard status-wrapped response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
   schemas:
     Envelope:
       type: object
@@ -57,6 +50,13 @@ components:
           - string
           - 'null'
       additionalProperties: true
+  responses:
+    Envelope:
+      description: Standard status-wrapped response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
   securitySchemes:
     revertApiToken:
       type: apiKey

@@ -143,42 +143,6 @@ paths:
         '401':
           description: Unauthorized
 components:
-  parameters:
-    ApiVersion:
-      name: x-api-version
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Optional Revert API version. Defaults to latest if missing
-    Cursor:
-      name: cursor
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Pagination cursor for next/previous page
-    Fields:
-      name: fields
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Comma-separated list of fields to include in response
-    PageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Number of results per page
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
   schemas:
     Event:
       type: object
@@ -211,11 +175,6 @@ components:
           type: string
         additional:
           type: object
-    ResponseStatus:
-      type: string
-      enum:
-      - ok
-      - error
     PaginatedResponse:
       type: object
       properties:
@@ -227,6 +186,47 @@ components:
         previous:
           type: string
           description: Cursor for previous page
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
+  parameters:
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

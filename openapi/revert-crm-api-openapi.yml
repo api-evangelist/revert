@@ -113,6 +113,23 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
+    Ping:
+      description: Pong.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     EntityList:
       description: A list of unified objects.
       content:
@@ -135,23 +152,15 @@ components:
                 items:
                   type: object
                   additionalProperties: true
-    Ping:
-      description: Pong.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              message:
-                type: string
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
   requestBodies:
     Search:
       required: true
@@ -163,15 +172,6 @@ components:
               searchCriteria:
                 type: object
                 additionalProperties: true
-  schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        errorMessage: {}
   securitySchemes:
     revertApiToken:
       type: apiKey

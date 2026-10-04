@@ -56,13 +56,6 @@ paths:
           description: Unauthorized
 components:
   parameters:
-    ApiVersion:
-      name: x-api-version
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Optional Revert API version. Defaults to latest if missing
     TenantId:
       name: x-revert-t-id
       in: header
@@ -70,6 +63,13 @@ components:
       schema:
         type: string
       description: The unique customer id used when the customer linked their account
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

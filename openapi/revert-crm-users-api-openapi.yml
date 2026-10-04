@@ -99,7 +99,52 @@ paths:
         '401':
           description: Unauthorized
 components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        remoteId:
+          type: string
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
   parameters:
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
     ApiVersion:
       name: x-api-version
       in: header
@@ -128,51 +173,6 @@ components:
       schema:
         type: string
       description: Number of results per page
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
-  schemas:
-    ResponseStatus:
-      type: string
-      enum:
-      - ok
-      - error
-    PaginatedResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
-          type: string
-          description: Cursor for next page
-        previous:
-          type: string
-          description: Cursor for previous page
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        role:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        remoteId:
-          type: string
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

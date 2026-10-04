@@ -97,6 +97,12 @@ paths:
                 type: string
 components:
   responses:
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Envelope:
       description: Standard status-wrapped response.
       content:
@@ -122,13 +128,15 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Connection'
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        errorMessage: {}
     Envelope:
       type: object
       properties:
@@ -139,14 +147,6 @@ components:
           - string
           - 'null'
       additionalProperties: true
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        errorMessage: {}
     Connection:
       type: object
       description: A linked third-party connection. Modeled from the unified Connection type.

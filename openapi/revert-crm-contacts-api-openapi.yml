@@ -233,11 +233,6 @@ components:
         additional:
           type: object
           description: Non-unified fields from the source CRM
-    ResponseStatus:
-      type: string
-      enum:
-      - ok
-      - error
     PaginatedResponse:
       type: object
       properties:
@@ -249,7 +244,26 @@ components:
         previous:
           type: string
           description: Cursor for previous page
+    ResponseStatus:
+      type: string
+      enum:
+      - ok
+      - error
   parameters:
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
+    Associations:
+      name: associations
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of associated objects to include
     ApiVersion:
       name: x-api-version
       in: header
@@ -278,20 +292,6 @@ components:
       schema:
         type: string
       description: Number of results per page
-    Associations:
-      name: associations
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Comma-separated list of associated objects to include
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

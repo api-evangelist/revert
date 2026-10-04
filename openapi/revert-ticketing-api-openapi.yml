@@ -95,6 +95,30 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    EntitySingle:
+      description: A single unified object.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              result:
+                type: object
+                additionalProperties: true
     CreateOrUpdate:
       description: Create/update result.
       content:
@@ -107,12 +131,6 @@ components:
               message:
                 type: string
               result: {}
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     EntityList:
       description: A list of unified objects.
       content:
@@ -135,24 +153,6 @@ components:
                 items:
                   type: object
                   additionalProperties: true
-    EntitySingle:
-      description: A single unified object.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              result:
-                type: object
-                additionalProperties: true
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
