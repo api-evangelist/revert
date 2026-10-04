@@ -412,6 +412,9 @@ solutions:
 - name: SaaS Integration Platform
   description: Build multi-CRM, multi-ticketing, and multi-chat integrations in your SaaS product
 common:
+- type: CapabilityMap
+  url: capabilities/revert-capability-edges.yml
+  name: Revert Business Capability Map
 - type: GitHubOrganization
   url: https://github.com/revertinc
 - type: LinkedIn

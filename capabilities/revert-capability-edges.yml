@@ -1,0 +1,51 @@
+slug: revert
+provider: Revert
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: CRM Deals
+  spec_file: revert-crm-deals-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.82
+  evidence: 'GET /crm/deals/{id}  getCrmDeal  Get CRM Deal; POST /crm/deals  createCrmDeal  Create CRM
+    Deal; schema: Deal'
+  reason: CRUD over CRM deal records is the deal/opportunity lifecycle object of a sales pipeline; unified-API
+    delivery does not change what the surface manages.
+- tag: CRM Leads
+  spec_file: revert-crm-leads-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.82
+  evidence: 'GET /crm/leads  getCrmLeads  List CRM Leads; PATCH /crm/leads/{id}  updateCrmLead  Update
+    CRM Lead; schema: Lead'
+  reason: Lead create/read/update is explicitly the lead stage of the lead-opportunity-deal lifecycle.
+- tag: CRM Contacts
+  spec_file: revert-crm-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.78
+  evidence: 'GET /crm/contacts  getCrmContacts  List CRM Contacts; schemas: Contact'
+  reason: Create, read, update and search of CRM contact records is directly customer data management.
+- tag: Accounting
+  spec_file: revert-accounting-api-openapi.yml
+  capability_id: BC-200
+  capability_id_l1: BC-200
+  capability_name: Financial Management
+  confidence: 0.75
+  evidence: GET /accounting/accounts  List Accounting Accounts; POST /accounting/expenses  createAccountingExpense
+  reason: Unified access to accounting accounts (chart of accounts) and expense records realises core
+    financial accounting; spans ledger and payables so no single L2 chosen.
