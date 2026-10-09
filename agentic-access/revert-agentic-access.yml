@@ -1,20 +1,151 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/revert-unified-api-openapi.yml
+source: openapi/revert-accounting-api-openapi.yml, openapi/revert-chat-api-openapi.yml, openapi/revert-connection-management-api-openapi.yml,
+  openapi/revert-connections-api-openapi.yml, openapi/revert-crm-api-openapi.yml, openapi/revert-crm-companies-api-openapi.yml,
+  openapi/revert-crm-contacts-api-openapi.yml, openapi/revert-crm-deals-api-openapi.yml, openapi/revert-crm-events-api-openapi.yml,
+  openapi/revert-crm-leads-api-openapi.yml, openapi/revert-crm-notes-api-openapi.yml, openapi/revert-crm-properties-api-openapi.yml,
+  openapi/revert-crm-tasks-api-openapi.yml, openapi/revert-crm-users-api-openapi.yml, openapi/revert-metadata-api-openapi.yml,
+  openapi/revert-proxy-api-openapi.yml, openapi/revert-ticketing-api-openapi.yml, openapi/revert-tickets-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 51
+  operations: 70
   by_action_class:
-    connected: 26
-    acting: 25
+    connected: 41
+    acting: 29
   by_consequence:
-    read: 26
-    write: 24
+    read: 41
+    write: 28
     physical: 1
   human_in_the_loop_required: 0
 operations:
+- path: /accounting/accounts
+  method: get
+  operationId: getAccountingAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounting/expenses
+  method: get
+  operationId: getAccountingExpenses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounting/expenses
+  method: post
+  operationId: createAccountingExpense
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /chat/channels
+  method: get
+  operationId: getChatChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /chat/messages
+  method: get
+  operationId: getChatMessages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /chat/messages
+  method: post
+  operationId: sendChatMessage
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /connection
+  method: delete
+  operationId: deleteConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /connection/all
+  method: get
+  operationId: getAllConnections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /connection/import
+  method: post
+  operationId: importConnections
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /connection/integration-status/{revertPublicToken}
+  method: get
+  operationId: getConnectionIntegrationStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /connection
   method: get
   operationId: getConnection
@@ -54,6 +185,128 @@ operations:
 - path: /connection/webhook
   method: delete
   operationId: deleteConnectionWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/ping
+  method: get
+  operationId: pingCrm
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/leads/search
+  method: post
+  operationId: searchLeads
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/companies/search
+  method: post
+  operationId: searchCompanies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/deals/search
+  method: post
+  operationId: searchDeals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/notes/search
+  method: post
+  operationId: searchNotes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/events/search
+  method: post
+  operationId: searchEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/tasks/search
+  method: post
+  operationId: searchCrmTasks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/companies/{id}
+  method: get
+  operationId: getCrmCompany
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/companies/{id}
+  method: patch
+  operationId: updateCrmCompany
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/companies
+  method: get
+  operationId: getCrmCompanies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/companies
+  method: post
+  operationId: createCrmCompany
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -123,57 +376,15 @@ operations:
   method: post
   operationId: searchCrmContacts
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /crm/companies/{id}
-  method: get
-  operationId: getCrmCompany
-  x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     token:
       max-ttl: 3600
     audit: none
-- path: /crm/companies/{id}
-  method: patch
-  operationId: updateCrmCompany
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /crm/companies
-  method: get
-  operationId: getCrmCompanies
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /crm/companies
+- path: /crm/proxy
   method: post
-  operationId: createCrmCompany
+  operationId: crmProxy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -226,6 +437,74 @@ operations:
 - path: /crm/deals
   method: post
   operationId: createCrmDeal
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/events/{id}
+  method: get
+  operationId: getCrmEvent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/events/{id}
+  method: patch
+  operationId: updateCrmEvent
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/events/{id}
+  method: delete
+  operationId: deleteCrmEvent
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/events
+  method: get
+  operationId: getCrmEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/events
+  method: post
+  operationId: createCrmEvent
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -343,6 +622,32 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /crm/properties
+  method: get
+  operationId: getCrmProperties
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/properties
+  method: post
+  operationId: createCrmProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /crm/tasks/{id}
   method: get
   operationId: getCrmTask
@@ -395,74 +700,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /crm/events/{id}
-  method: get
-  operationId: getCrmEvent
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /crm/events/{id}
-  method: patch
-  operationId: updateCrmEvent
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /crm/events/{id}
-  method: delete
-  operationId: deleteCrmEvent
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /crm/events
-  method: get
-  operationId: getCrmEvents
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /crm/events
-  method: post
-  operationId: createCrmEvent
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /crm/users/{id}
   method: get
   operationId: getCrmUser
@@ -499,9 +736,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /crm/properties
+- path: /metadata/crms
   method: get
-  operationId: getCrmProperties
+  operationId: getMetadataCrms
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -509,9 +746,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /crm/properties
+- path: /ticket/proxy
   method: post
-  operationId: createCrmProperty
+  operationId: ticketProxy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -525,9 +762,65 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /crm/proxy
+- path: /ticket/users
+  method: get
+  operationId: getTicketUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ticket/users/{id}
+  method: get
+  operationId: getTicketUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ticket/comments
+  method: get
+  operationId: getTicketComments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ticket/comments
   method: post
-  operationId: crmProxy
+  operationId: createTicketComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ticket/comments/{id}
+  method: get
+  operationId: getTicketComment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ticket/comments/{id}
+  method: patch
+  operationId: updateTicketComment
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -603,77 +896,3 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /chat/channels
-  method: get
-  operationId: getChatChannels
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /chat/messages
-  method: get
-  operationId: getChatMessages
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /chat/messages
-  method: post
-  operationId: sendChatMessage
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /accounting/accounts
-  method: get
-  operationId: getAccountingAccounts
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounting/expenses
-  method: get
-  operationId: getAccountingExpenses
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounting/expenses
-  method: post
-  operationId: createAccountingExpense
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
