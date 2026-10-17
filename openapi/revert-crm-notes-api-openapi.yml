@@ -124,18 +124,43 @@ paths:
         '401':
           description: Unauthorized
 components:
+  parameters:
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Number of results per page
+    ApiVersion:
+      name: x-api-version
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional Revert API version. Defaults to latest if missing
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination cursor for next/previous page
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The unique customer id used when the customer linked their account
   schemas:
-    PaginatedResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
-          type: string
-          description: Cursor for next page
-        previous:
-          type: string
-          description: Cursor for previous page
     Note:
       type: object
       properties:
@@ -164,42 +189,17 @@ components:
       enum:
       - ok
       - error
-  parameters:
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The unique customer id used when the customer linked their account
-    ApiVersion:
-      name: x-api-version
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Optional Revert API version. Defaults to latest if missing
-    Cursor:
-      name: cursor
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Pagination cursor for next/previous page
-    Fields:
-      name: fields
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Comma-separated list of fields to include in response
-    PageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Number of results per page
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

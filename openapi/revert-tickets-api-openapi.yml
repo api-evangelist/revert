@@ -142,17 +142,17 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    PaginatedResponse:
+    TicketCollection:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
+        id:
           type: string
-          description: Cursor for next page
-        previous:
+        name:
           type: string
-          description: Cursor for previous page
+        description:
+          type: string
+        remoteId:
+          type: string
     Ticket:
       type: object
       properties:
@@ -183,30 +183,37 @@ components:
           type: string
         additional:
           type: object
-    TicketCollection:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        remoteId:
-          type: string
     ResponseStatus:
       type: string
       enum:
       - ok
       - error
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
   parameters:
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
       schema:
         type: string
-      description: The unique customer id used when the customer linked their account
+      description: Number of results per page
+    Fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Comma-separated list of fields to include in response
     ApiVersion:
       name: x-api-version
       in: header
@@ -221,20 +228,13 @@ components:
       schema:
         type: string
       description: Pagination cursor for next/previous page
-    Fields:
-      name: fields
-      in: query
-      required: false
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
       schema:
         type: string
-      description: Comma-separated list of fields to include in response
-    PageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Number of results per page
+      description: The unique customer id used when the customer linked their account
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

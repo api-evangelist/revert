@@ -97,17 +97,21 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    PaginatedResponse:
+    ChatChannel:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        next:
+        id:
           type: string
-          description: Cursor for next page
-        previous:
+        name:
           type: string
-          description: Cursor for previous page
+        description:
+          type: string
+        type:
+          type: string
+        memberCount:
+          type: integer
+        remoteId:
+          type: string
     ChatMessage:
       type: object
       properties:
@@ -124,34 +128,30 @@ components:
           format: date-time
         remoteId:
           type: string
-    ChatChannel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: string
-        memberCount:
-          type: integer
-        remoteId:
-          type: string
     ResponseStatus:
       type: string
       enum:
       - ok
       - error
+    PaginatedResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        next:
+          type: string
+          description: Cursor for next page
+        previous:
+          type: string
+          description: Cursor for previous page
   parameters:
-    TenantId:
-      name: x-revert-t-id
-      in: header
-      required: true
+    PageSize:
+      name: pageSize
+      in: query
+      required: false
       schema:
         type: string
-      description: The unique customer id used when the customer linked their account
+      description: Number of results per page
     ApiVersion:
       name: x-api-version
       in: header
@@ -166,13 +166,13 @@ components:
       schema:
         type: string
       description: Pagination cursor for next/previous page
-    PageSize:
-      name: pageSize
-      in: query
-      required: false
+    TenantId:
+      name: x-revert-t-id
+      in: header
+      required: true
       schema:
         type: string
-      description: Number of results per page
+      description: The unique customer id used when the customer linked their account
   securitySchemes:
     ApiTokenAuth:
       type: apiKey

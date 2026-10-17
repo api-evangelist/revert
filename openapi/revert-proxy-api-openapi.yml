@@ -44,20 +44,6 @@ components:
         error:
           type: string
         errorMessage: {}
-  responses:
-    Proxy:
-      description: The raw response from the downstream provider.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    Unauthorized:
-      description: Missing or invalid x-revert-api-token / x-revert-t-id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   requestBodies:
     Proxy:
       required: true
@@ -75,6 +61,20 @@ components:
                 type: object
                 additionalProperties: true
             additionalProperties: true
+  responses:
+    Proxy:
+      description: The raw response from the downstream provider.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    Unauthorized:
+      description: Missing or invalid x-revert-api-token / x-revert-t-id.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     revertApiToken:
       type: apiKey
