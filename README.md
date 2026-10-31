@@ -1,4 +1,4 @@
-# Revert (revert)
+# Revert
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,60 +66,183 @@
 
 Revert is an open-source unified API platform that makes it easy to build product integrations 10x faster. It provides a single standardized API to integrate with CRMs (Salesforce, HubSpot, Zoho CRM, Pipedrive, Close CRM), ticketing systems (Jira, Asana), accounting (Xero, QuickBooks), chat (Slack, Microsoft Teams, Discord), and more, with built-in OAuth management, token refresh, and retry logic.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/apis.yml)
+**Areas:** Integration · CRM · Unified API · Open Source
 
-## Scope
+## Revert on APIs.io
 
-- **Type:** Index
+Everything profiled for Revert is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/revert/](https://apis.io/providers/revert/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (18)
 
-- Integrations
-- CRM
-- Unified API
-- Open Source
+- [Revert Accounting API](https://apis.io/apis/revert/revert-accounting-api/) — Unified accounting operations across Xero and QuickBooks
+- [Revert Chat API](https://apis.io/apis/revert/revert-chat-api/) — Unified chat operations across Slack, Microsoft Teams, and Discord
+- [Revert Connections API](https://apis.io/apis/revert/revert-connections-api/) — Manage third-party OAuth connections and webhooks
+- [Revert CRM Companies API](https://apis.io/apis/revert/revert-crm-companies-api/) — Unified CRM company/account operations
+- [Revert CRM Contacts API](https://apis.io/apis/revert/revert-crm-contacts-api/) — Unified CRM contact operations across Salesforce, HubSpot, Zoho, Pipedrive, and Close
+- [Revert CRM Deals API](https://apis.io/apis/revert/revert-crm-deals-api/) — Unified CRM deal/opportunity operations
+- [Revert CRM Events API](https://apis.io/apis/revert/revert-crm-events-api/) — Unified CRM event/activity operations
+- [Revert CRM Leads API](https://apis.io/apis/revert/revert-crm-leads-api/) — Unified CRM lead operations
+- [Revert CRM Notes API](https://apis.io/apis/revert/revert-crm-notes-api/) — Unified CRM note operations
+- [Revert CRM Properties API](https://apis.io/apis/revert/revert-crm-properties-api/) — Unified CRM custom property operations
+- [Revert CRM Tasks API](https://apis.io/apis/revert/revert-crm-tasks-api/) — Unified CRM task operations
+- [Revert CRM Users API](https://apis.io/apis/revert/revert-crm-users-api/) — Unified CRM user operations
+- [Revert Tickets API](https://apis.io/apis/revert/revert-tickets-api/) — Unified ticketing operations across Jira and Asana
+- [Revert Connection Management API](https://apis.io/apis/revert/revert-connection-management-api/) — Manage linked third-party connections and connection webhooks per tenant.
+- [Revert CRM API](https://apis.io/apis/revert/revert-crm-api/) — Unified CRM models - contacts, leads, companies, deals, notes, events, tasks, users.
+- [Revert Metadata API](https://apis.io/apis/revert/revert-metadata-api/) — Environment / app configuration for the connect UI.
+- [Revert Proxy API](https://apis.io/apis/revert/revert-proxy-api/) — Passthrough proxy to the underlying provider's native API.
+- [Revert Ticketing API](https://apis.io/apis/revert/revert-ticketing-api/) — Unified ticketing models - tasks, users, comments, collections.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Revert Unified API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Revert Unified API provides a single interface to integrate with multiple third-party platforms across CRM, ticketing, chat, and accounting categories. Developers authenticate once per tenant using OAuth 2.0 and access a normalized data model across all supported providers.
+- [Revert Agentic Access](https://apis.io/agentic-access/revert/revert-agentic-access/)
 
-- **Human URL:** [https://www.revert.dev/](https://www.revert.dev/)
-- **Base URL:** `https://api.revert.dev`
+#### JSON Schema (2)
 
-#### Tags
+The data models the API reads and writes.
 
-- Integrations
-- CRM
-- Unified API
-- Salesforce
-- HubSpot
-- Slack
-- Jira
+- [Revert Unified CRM Contact](https://apis.io/schemas/revert/revert-contact/)
+- [Revert Unified CRM Deal](https://apis.io/schemas/revert/revert-deal/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://docs.revert.dev)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/revert/refs/heads/main/openapi/revert-unified-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Git Hub](https://github.com/revertinc/revert)
-- [GitHub Organization](https://github.com/revertinc)
-- [Postman Collection](collections/revert-unified-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revert-unified-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Revert Contact Structure](https://apis.io/json-structure/revert/revert-contact-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Revert Context](https://apis.io/jsonld/revert/revert-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Revert Unified API Vocabulary](https://apis.io/vocabularies/revert/revert-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Revert Create Deal Example](https://apis.io/examples/revert/revert-create-deal-example/)
+- [Revert Get Contacts Example](https://apis.io/examples/revert/revert-get-contacts-example/)
+
+#### Collections (15)
+
+Postman and Open Collection request collections.
+
+- [Revert Unified Accounting API](https://apis.io/collections/revert/open-revert-accounting-api/)
+- [Revert Unified API](https://apis.io/collections/revert/open-revert-api/)
+- [Revert Unified Accounting Chat API](https://apis.io/collections/revert/open-revert-chat-api/)
+- [Revert Unified Accounting Connections API](https://apis.io/collections/revert/open-revert-connections-api/)
+- [Revert Unified Accounting CRM Companies API](https://apis.io/collections/revert/open-revert-crm-companies-api/)
+- [Revert Unified Accounting CRM Contacts API](https://apis.io/collections/revert/open-revert-crm-contacts-api/)
+- [Revert Unified Accounting CRM Deals API](https://apis.io/collections/revert/open-revert-crm-deals-api/)
+- [Revert Unified Accounting CRM Events API](https://apis.io/collections/revert/open-revert-crm-events-api/)
+- [Revert Unified Accounting CRM Leads API](https://apis.io/collections/revert/open-revert-crm-leads-api/)
+- [Revert Unified Accounting CRM Notes API](https://apis.io/collections/revert/open-revert-crm-notes-api/)
+- [Revert Unified Accounting CRM Properties API](https://apis.io/collections/revert/open-revert-crm-properties-api/)
+- [Revert Unified Accounting CRM Tasks API](https://apis.io/collections/revert/open-revert-crm-tasks-api/)
+- [Revert Unified Accounting CRM Users API](https://apis.io/collections/revert/open-revert-crm-users-api/)
+- [Revert Unified Accounting Tickets API](https://apis.io/collections/revert/open-revert-tickets-api/)
+- [Revert Unified API](https://apis.io/collections/revert/open-revert-unified-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Revert — jsonschema rules](https://apis.io/rules/revert/revert-jsonschema-spectral-rules/)
+- [Revert API Rules](https://apis.io/rules/revert/revert-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Revert Authentication](https://apis.io/security/revert/revert-authentication/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Revert Plans Pricing](https://apis.io/plans/revert/revert-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Revert Rate Limits](https://apis.io/rate-limits/revert/revert-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Revert Finops](https://apis.io/finops/revert/revert-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.revert.dev/)
-- [Git Hub](https://github.com/revertinc/revert)
 - [Documentation](https://docs.revert.dev)
-- [Authentication](https://docs.revert.dev)
+- [GitHub](https://github.com/revertinc)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 24.8** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 49.2 |
+| Contract governance | 9.8 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 20.2 |
+| Access clarity | 7.9 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/revert/](https://apis.io/providers/revert/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Revert: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/revert/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
